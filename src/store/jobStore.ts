@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export interface Company {
   id: number;
@@ -20,46 +20,63 @@ export interface Job {
   skills: string[];
   description: string;
   postedAt: string;
+  industry: string;
 }
 
-interface JobFilters {
+interface Filter {
   industry: string | null;
   skill: string | null;
 }
 
-interface JobState {
+interface JobStore {
   jobs: Job[];
   loading: boolean;
   error: string | null;
-  filters: JobFilters;
+  filter: Filter;
   fetchJobs: () => Promise<void>;
-  setFilter: (filter: Partial<JobFilters>) => void;
+  setFilter: (filter: Filter) => void;
   filteredJobs: () => Job[];
 }
 
-export const useJobStore = create<JobState>((set, get) => ({
+export const useJobStore = create<JobStore>((set, get) => ({
   jobs: [],
-  loading: false,
+  loading: true,
   error: null,
-  filters: { industry: null, skill: null },
+  filter: { industry: null, skill: null },
+
   fetchJobs: async () => {
-    set({ loading: true, error: null });
+    set({ loading: true });
+
     try {
       const res = await axios.get<Job[]>("/jobs.json");
-      set({ jobs: res.data, loading: false });
-    } catch (err: any) {
-      console.error("Error fetching jobs:", err);
-      set({ error: err.message, loading: false });
+
+      set({
+        jobs: res.data,
+        error: null,
+      });
+    } catch (err: unknown) {
+      const message =
+        err instanceof AxiosError
+          ? err.message
+          : err instanceof Error
+          ? err.message
+          : "Unknown error";
+
+      set({ error: message });
+    } finally {
+      set({ loading: false });
     }
   },
-  setFilter: (filter) => set({ filters: { ...get().filters, ...filter } }),
+
+  setFilter: (filter) => set({ filter }),
+
   filteredJobs: () => {
-    const { jobs, filters } = get();
-    return jobs.filter((job) => {
-      const industryMatch =
-        !filters.industry || job.company.industry === filters.industry;
-      const skillMatch = !filters.skill || job.skills.includes(filters.skill);
-      return industryMatch && skillMatch;
-    });
+    const { jobs, filter } = get();
+
+    return jobs.filter(
+      (job) =>
+        (!filter.industry || job.company.industry === filter.industry) &&
+        (!filter.skill || job.skills.includes(filter.skill))
+    );
   },
 }));

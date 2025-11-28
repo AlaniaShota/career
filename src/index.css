@@ -6,3 +6,7 @@
   --color-magic-gold: #f5c96b;
   --color-soft-silver: #dde2e9;
 }
+
+* {
+  box-sizing: border-box;
+}
