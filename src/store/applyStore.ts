@@ -19,7 +19,6 @@ interface ApplyStore {
   addApplication: (app: Application) => void;
 }
 
-// сразу читаем из localStorage при инициализации
 const savedApplications: Application[] = JSON.parse(
   localStorage.getItem("applications") || "[]"
 );
@@ -31,7 +30,6 @@ export const useApplyStore = create<ApplyStore>((set, get) => ({
     const newApp = { ...app, submittedAt: new Date().toISOString() };
     const newApplications = [...get().applications, newApp];
 
-    // сохраняем в localStorage
     localStorage.setItem("applications", JSON.stringify(newApplications));
 
     set({ applications: newApplications });
