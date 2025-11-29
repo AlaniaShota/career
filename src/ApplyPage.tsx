@@ -6,18 +6,21 @@ import * as yup from "yup";
 import { motion } from "framer-motion";
 import { cardItem, hoverTransition, listContainer } from "./utils/animations";
 import { useApplyStore, type Application } from "./store/applyStore";
+import { useState } from "react";
 
-const schema = yup.object({
-  name: yup.string().required("First name is required"),
-  lastName: yup.string().required("Last name is required"),
-  email: yup.string().email("Invalid email").required("Email is required"),
-  number: yup.string().required("Phone number is required"),
-  linkedin: yup.string().url().nullable(),
-  portfolio: yup.string().url().nullable(),
-  cv: yup
-    .mixed<FileList>()
-    .test("required", "CV is required", (value) => value && value.length > 0),
-}).required();
+const schema = yup
+  .object({
+    name: yup.string().required("First name is required"),
+    lastName: yup.string().required("Last name is required"),
+    email: yup.string().email("Invalid email").required("Email is required"),
+    number: yup.string().required("Phone number is required"),
+    linkedin: yup.string().url().nullable(),
+    portfolio: yup.string().url().nullable(),
+    cv: yup
+      .mixed<FileList>()
+      .test("required", "CV is required", (value) => value && value.length > 0),
+  })
+  .required();
 
 type FormData = {
   name: string;
@@ -33,14 +36,18 @@ export default function ApplyPage() {
   const [params] = useSearchParams();
   const jobId = params.get("jobId") ?? "";
   const jobTitle = params.get("title") ?? "";
-
+  const [successMessage, setSuccessMessage] = useState("");
   const { addApplication } = useApplyStore();
 
-  const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid },
+  } = useForm<FormData>({
     resolver: yupResolver(schema) as unknown as Resolver<FormData>,
     mode: "onChange",
   });
-  
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const app: Application = {
@@ -58,6 +65,8 @@ export default function ApplyPage() {
 
     addApplication(app);
     reset();
+    setSuccessMessage("Application submitted successfully!");
+    setTimeout(() => setSuccessMessage(""), 3000);
   };
 
   const MotionInput = (name: keyof FormData, label: string, type = "text") => (
@@ -140,6 +149,16 @@ export default function ApplyPage() {
         >
           Submit
         </motion.button>
+        {successMessage && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="text-green-400 text-center font-semibold mb-2"
+          >
+            {successMessage}
+          </motion.p>
+        )}
       </motion.form>
     </motion.div>
   );
