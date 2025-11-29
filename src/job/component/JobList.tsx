@@ -6,7 +6,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import type { Job } from "../../store/jobStore";
 import JobsFilter, { type FilterForm } from "./JobsFilter";
 import JobCards from "./JobCard";
-import JobDetailsWrapper from "./JobDetailsWrapper";
+import JobDetailsWrapper from "./details/JobDetailsWrapper";
 
 interface Props {
   job?: Job[] | null;
@@ -48,7 +48,7 @@ export default function JobList({ job }: Props) {
             onSelect={setSelectedJob}
           />
         </div>
-        <div className="w-2/5 sticky top-4 self-start" ref={detailsRef}>
+        <div className="w-2/5 flex flex-col justify-end items-end sticky  self-start" ref={detailsRef}>
           <JobsFilter jobs={safeJobs} />
           <AnimatePresence>
             <JobDetailsWrapper selectedJob={selectedJob} />

@@ -18,7 +18,7 @@ export default function SearchInput({ control, name }: Props) {
           {...field}
           value={field.value ?? ""} 
           placeholder="Search jobs..."
-          className="w-full px-3 py-2 border rounded"
+          className="w-full m-3 p-1 rounded"
         />
       )}
     />

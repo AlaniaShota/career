@@ -1,76 +1,148 @@
+"use client";
 import { useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { jsPDF } from "jspdf";
+import { motion } from "framer-motion";
+import { cardItem, hoverTransition, listContainer } from "./utils/animations";
+
+/* ---------------------- YUP SCHEMA ---------------------- */
+
+const schema = yup.object({
+  name: yup.string().required("Name is required"),
+  lastName: yup.string().required("Last name is required"),
+  email: yup.string().email("Invalid email").required("Email is required"),
+  number: yup.string().required("Phone number is required"),
+
+  linkedin: yup.string().url().nullable().optional().notRequired(),
+  portfolio: yup.string().url().nullable().optional().notRequired(),
+
+  cv: yup
+    .mixed<FileList>()
+    .test("required", "CV is required", (value) => value && value.length > 0),
+});
+
+type FormData = yup.InferType<typeof schema>;
+
+/* -------------------------------------------------------- */
 
 export default function ApplyPage() {
   const [params] = useSearchParams();
-
   const jobId = params.get("jobId");
   const title = params.get("title");
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [cover, setCover] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+    mode: "onChange",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  /* ---------------------- PDF GENERATION ---------------------- */
 
-    const payload = {
-      jobId,
-      title,
-      name,
-      email,
-      coverLetter: cover,
-    };
+  const generatePDF = (data: FormData & { jobId?: string | null; title?: string | null }) => {
+    const doc = new jsPDF();
 
-    console.log("Submitting:", payload);
+    doc.setFontSize(16);
+    doc.text(`Job Application: ${data.title || "N/A"}`, 10, 20);
 
-    // тут можешь отправлять на API
-    alert("Application submitted!");
+    doc.setFontSize(12);
+    doc.text(`Name: ${data.name} ${data.lastName}`, 10, 30);
+    doc.text(`Email: ${data.email}`, 10, 40);
+    doc.text(`Phone: ${data.number}`, 10, 50);
+
+    if (data.linkedin) doc.text(`LinkedIn: ${data.linkedin}`, 10, 60);
+    if (data.portfolio) doc.text(`Portfolio: ${data.portfolio}`, 10, 70);
+
+    if (data.cv?.[0]) doc.text(`CV File: ${data.cv[0].name}`, 10, 80);
+
+    doc.save(`${data.name}_${data.lastName}_Application.pdf`);
   };
 
-  return (
-    <div className="p-4 max-w-xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Apply for: {title}</h1>
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    generatePDF({ jobId, title, ...data });
+  };
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
-        <label className="flex flex-col">
-          <span className="font-semibold">Full Name</span>
-          <input
-            type="text"
-            className="border p-2 rounded"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-
-        <label className="flex flex-col">
-          <span className="font-semibold">Email</span>
-          <input
-            type="email"
-            className="border p-2 rounded"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-
-        <label className="flex flex-col">
-          <span className="font-semibold">Cover Letter</span>
-          <textarea
-            className="border p-2 rounded"
-            rows={4}
-            value={cover}
-            onChange={(e) => setCover(e.target.value)}
-          />
-        </label>
-
-        <button
-          type="submit"
-          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+  const motionField = (name: keyof FormData, label: string, type = "text") => (
+    <motion.div
+      className="form__group relative"
+      variants={cardItem}
+      whileHover={{ scale: 1.01, boxShadow: "0 8px 15px rgba(0,0,0,0.2)" }}
+      transition={hoverTransition}
+    >
+      <input type={type} placeholder=" " {...register(name)} className="form__field rounded-2xl" />
+      <label className="form__label">{label}</label>
+      {errors[name] && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-red-500 text-sm mt-1"
         >
-          Send Application
-        </button>
-      </form>
-    </div>
+          {errors[name]?.message}
+        </motion.p>
+      )}
+    </motion.div>
+  );
+
+  return (
+    <motion.div
+      className="p-6 max-w-xl mx-auto bg-linear-to-r from-gstore-midnight to-gstore-blue rounded-3xl mt-10 text-white shadow-xl"
+      variants={listContainer}
+      initial="hidden"
+      animate="visible"
+    >
+      <h1 className="text-2xl font-bold mb-6">{title}</h1>
+
+      <motion.form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-5"
+        variants={listContainer}
+      >
+        {motionField("name", "First Name *")}
+        {motionField("lastName", "Last Name *")}
+        {motionField("email", "Email *", "email")}
+        {motionField("number", "Phone Number *", "tel")}
+        {motionField("linkedin", "LinkedIn URL", "url")}
+        {motionField("portfolio", "Portfolio URL", "url")}
+
+        {/* CV Upload */}
+        <motion.div
+          className="form__group relative"
+          variants={cardItem}
+          whileHover={{ scale: 1.01, boxShadow: "0 8px 15px rgba(0,0,0,0.2)" }}
+          transition={hoverTransition}
+        >
+          <input
+            type="file"
+            {...register("cv")}
+            className="form__field"
+            accept=".pdf"
+          />
+          <label className="form__label">Upload CV *</label>
+
+          {errors.cv && (
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-500 text-sm mt-1">
+              {errors.cv.message}
+            </motion.p>
+          )}
+        </motion.div>
+
+        {/* SUBMIT BUTTON */}
+        <motion.button
+          type="submit"
+          disabled={!isValid}
+          className="px-5 py-3 bg-f83e55 rounded-lg font-semibold hover:bg-faa71a transition-colors disabled:opacity-50"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.98 }}
+          transition={hoverTransition}
+        >
+          Submit & Download PDF
+        </motion.button>
+      </motion.form>
+    </motion.div>
   );
 }

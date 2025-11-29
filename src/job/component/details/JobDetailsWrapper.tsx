@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import JobDetails from "./JobDetails";
-import type { Job } from "../../store/jobStore";
+import JobDetails from "./component/JobDetails";
+import type { Job } from "../../../store/jobStore";
 
 interface Props {
   selectedJob: Job | null;
@@ -18,7 +18,7 @@ export default function JobDetailsWrapper({ selectedJob }: Props) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
           transition={{ duration: 0.2 }}
-          className="w-full bg-white rounded-2xl"
+        //   className="w-full bg-white rounded-2xl"
         >
           <JobDetails job={selectedJob} />
         </motion.div>

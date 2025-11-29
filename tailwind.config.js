@@ -8,6 +8,9 @@ module.exports = {
         "gstore-midnight": "#0F172A",
         "magic-gold": "#FACC15",
       },
+      backgroundColor: {
+        "magic-gold-bg": "#FACC15",
+      },
     },
   },
   plugins: [],

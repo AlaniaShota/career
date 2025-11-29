@@ -10,7 +10,7 @@ interface Props {
         <button
           onClick={() => onChange(!remoteOnly)}
           className={`w-12 h-6 rounded-full p-1 transition ${
-            remoteOnly ? "bg-[var(--color-gstore-blue)]" : "bg-gray-300"
+            remoteOnly ? "bg-gstore-blue" : "bg-gray-300"
           }`}
         >
           <span
