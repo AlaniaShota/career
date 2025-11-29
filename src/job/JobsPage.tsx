@@ -6,13 +6,12 @@ import axios from "axios";
 import JobList from "./component/JobList";
 
 export default function JobsPage() {
-  const [jobs, setJobs] = useState<Job[] | null>(null);
+  const [job, setJobs] = useState<Job[] | null>(null);
 
   useEffect(() => {
     axios
       .get<Job[]>("/jobs.json")
       .then((res) => {
-        console.log("Jobs loaded:", res.data); // <-- проверяем, пришли ли данные
         setJobs(res.data);
       })
       .catch((err) => {
@@ -21,5 +20,5 @@ export default function JobsPage() {
   }, []);
   
 
-  return <JobList jobs={jobs || []} />;
+  return <JobList job={job || []} />;
 }

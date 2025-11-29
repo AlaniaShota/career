@@ -30,7 +30,7 @@ export default function JobsFilter({ jobs }: Props) {
 
   return (
     <form className="bg-white p-4 rounded-lg shadow-sm border">
-      <SearchInput control={control} name="search" setValue={setValue} />
+      <SearchInput control={control} name="search" />
 
       <button
         type="button"
@@ -42,27 +42,14 @@ export default function JobsFilter({ jobs }: Props) {
 
       {open && (
         <div className="mt-4 space-y-4">
-          <IndustryFilter
-            industries={industries}
-            control={control}
-            name="industry"
-          />
-          <SkillFilter
-            skills={skills}
-            control={control}
-            name="skill"
-            setValue={setValue}
-          />
+          <IndustryFilter industries={industries} control={control} name="industry" />
+          <SkillFilter skills={skills} control={control} name="skill" setValue={setValue} />
           <RemoteToggle control={control} name="remote" />
           <ExperienceFilter control={control} name="experience" />
           <SortFilter control={control} name="sort" />
           <ActiveChips watch={watch} setValue={setValue} />
 
-          <button
-            type="button"
-            onClick={() => reset()}
-            className="px-3 py-2 rounded bg-gray-200 w-full"
-          >
+          <button type="button" onClick={() => reset()} className="px-3 py-2 rounded bg-gray-200 w-full">
             Reset all
           </button>
         </div>

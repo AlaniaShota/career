@@ -1,87 +1,141 @@
+import { motion } from "framer-motion";
+import { useMemo } from "react";
+import { useFormContext } from "react-hook-form";
 
-import { motion, type Variants,  } from "framer-motion";
+import type { FilterForm } from "./JobsFilter";
+
+import {
+  listContainer,
+  cardItem,
+  cardWrapperHover,
+  hoverTransition,
+  cardInnerItem,
+  getJobCardClass,
+} from "../../utils/animations";
+
 import type { Job } from "../../store/jobStore";
+import { filterAndSortJobs } from "../../utils/jobs";
 
 interface Props {
-  job: Job;
+  job: Job[];
+  selectedJob: Job | null;
+  onSelect: (job: Job) => void;
 }
 
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 5 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: "spring", stiffness: 300, damping: 20 },
-  },
-};
+export default function JobCards({ job, selectedJob, onSelect }: Props) {
+  const { watch } = useFormContext<FilterForm>();
+  const filters = watch();
 
-export default function JobCard({ job }: Props) {
+  const filteredJobs = useMemo(
+    () => filterAndSortJobs(job, filters),
+    [job, filters]
+  );
+
+  if (!filteredJobs.length)
+    return <div className="p-6 text-center text-gray-500">Nothing found</div>;
+
   return (
     <motion.div
-      className="flex justify-between items-center p-4 rounded-2xl shadow-xl/30 transition-all bg-white"
-      whileHover={{
-        scale: 1.01,
-        y: -2,
-        boxShadow: "0 20px 40px rgba(0,0,0,0.25)",
-      }}
-      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6"
+      variants={listContainer}
       initial="hidden"
       animate="visible"
-      variants={itemVariants}
     >
-      <div className="flex flex-row items-center">
-        <motion.div
-          className="shadow-xl/30 rounded-2xl py-2 px-4"
-          whileHover={{ y: -5 }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          variants={itemVariants}
-        >
-          <img
-            src={job.company.logo}
-            alt={job.company.name}
-            className="w-16 h-16 m-2"
-          />
-        </motion.div>
+      {filteredJobs.map((item) => {
+        const isSelected = selectedJob?.id === item.id;
+        const isOtherSelected = !!selectedJob && !isSelected;
 
-        <div className="flex flex-col justify-between items-start mx-6">
-          <motion.h5
-            className="font-semibold"
-            style={{ color: "var(--color-gstore-blue)" }}
-            variants={itemVariants}
-          >
-            {job.company.name}
-          </motion.h5>
+        const { className } = getJobCardClass(isSelected);
 
-          <motion.h3
-            className="font-bold cursor-pointer"
-            whileHover={{
-              color: "var(--color-gstore-blue)",
-              y: -3,
-            }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            style={{ color: "var(--color-gstore-midnight)" }}
-            variants={itemVariants}
-          >
-            {job.title}
-          </motion.h3>
-
+        return (
           <motion.div
-            className="text-center p-2 rounded"
-            whileHover={{
-              backgroundColor: "#E5E7EB",
-              color: "var(--color-gstore-midnight)",
-            }}
-            transition={{ duration: 0.3 }}
-            // style={{ borderColor: "var(--color-gstore-blue)" }}
-            variants={itemVariants}
+            key={item.id}
+            variants={cardItem}
+            whileHover={cardWrapperHover}
+            transition={hoverTransition}
+            animate={{ opacity: isOtherSelected ? 0.55 : 1 }}
+            onClick={() => onSelect(item)}
+            className={className}
           >
-            <p className="text-sm">{job.company.industry}</p>
+            <Card job={item} expanded/>
           </motion.div>
+        );
+      })}
+    </motion.div>
+  );
+}
+
+function Card({ job, expanded }: { job: Job; expanded: boolean }) {
+  return (
+    <motion.div
+      layout
+      className="flex flex-col p-4 rounded-2xl shadow-xl/30 bg-white"
+    >
+      {/* Верхняя часть */}
+      <div className="flex justify-between items-center">
+        <div className="flex flex-row items-center">
+          <motion.div variants={cardInnerItem} className="p-2 rounded-2xl">
+            <img
+              src={job.company.logo}
+              alt={job.company.name}
+              className="w-16 h-16 m-2"
+            />
+          </motion.div>
+
+          <div className="flex flex-col ml-4">
+            <motion.h5
+              className="font-semibold"
+              variants={cardInnerItem}
+              style={{ color: "var(--color-gstore-blue)" }}
+            >
+              {job.company.name}
+            </motion.h5>
+
+            <motion.h3
+              variants={cardInnerItem}
+              className="font-bold cursor-pointer"
+              whileHover={{ y: -2, color: "var(--color-gstore-blue)" }}
+            >
+              {job.title}
+            </motion.h3>
+
+            <motion.div variants={cardInnerItem}>
+              <p className="text-sm">{job.company.industry}</p>
+            </motion.div>
+          </div>
         </div>
+
+        <motion.p className="text-xs text-gray-400" variants={cardInnerItem}>
+          Posted: {new Date(job.postedAt).toLocaleDateString()}
+        </motion.p>
       </div>
-      <motion.p className="text-xs mt-1 text-gray-400" variants={itemVariants}>
-        Posted: {new Date(job.postedAt).toLocaleDateString()}
-      </motion.p>
+
+      {/* Раскрывающийся блок */}
+      {expanded && (
+        <motion.div
+          layout
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3 }}
+          className="mt-4 p-3 rounded-xl bg-gray-50"
+        >
+          <p className="text-sm mb-2">
+            {job.description ?? "No description provided."}
+          </p>
+
+          <div className="flex gap-2 flex-wrap">
+            {job.skills?.map((skill) => (
+              <span
+                key={skill}
+                className="px-2 py-1 text-xs bg-blue-100 text-blue-600 rounded-lg"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+      )}
     </motion.div>
   );
 }
