@@ -11,16 +11,19 @@ export interface Company {
 export interface Job {
   id: number;
   title: string;
-  company: Company;
+  company: {
+    id: number;
+    name: string;
+    logo: string;
+    industry: string;
+  };
   location: string;
   remote: boolean;
   salary: string;
   employmentType: string;
   experienceLevel: string;
   skills: string[];
-  description: string;
   postedAt: string;
-  industry: string;
 }
 
 interface Filter {
