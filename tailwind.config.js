@@ -7,6 +7,7 @@ module.exports = {
         "gstore-blue": "#1E40AF",
         "gstore-midnight": "#0F172A",
         "magic-gold": "#FACC15",
+        "soft-silver": "#DDE2E9",
       },
       backgroundColor: {
         "magic-gold-bg": "#FACC15",

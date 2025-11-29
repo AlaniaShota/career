@@ -41,13 +41,13 @@ export default function JobsPage() {
         window.innerHeight + window.scrollY >=
         document.body.offsetHeight - 200
       ) {
-        loadMoreJobs(); // теперь функция уже объявлена
+        loadMoreJobs(); 
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [visibleJobs, allJobs, loading, next]); // добавляем зависимости
+  }, [visibleJobs, allJobs, loading, next]); 
   
 
   return (

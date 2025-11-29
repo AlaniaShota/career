@@ -10,6 +10,7 @@ export interface Application {
   linkedin?: string;
   portfolio?: string;
   cvFileName?: string;
+  cvFile?: File; // добавили сам файл
   submittedAt?: string;
 }
 

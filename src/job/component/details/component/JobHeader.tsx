@@ -3,14 +3,12 @@
 import { motion } from "framer-motion";
 import type { Job } from "../../../../store/jobStore";
 interface JobHeaderProps {
-    job: Job;
-  }
-export default function JobHeader({ job }:JobHeaderProps) {
+  job: Job;
+}
+export default function JobHeader({ job }: JobHeaderProps) {
   return (
     <div className="flex flex-row justify-start items-center">
-      <motion.div
-        className="bg-white w-32 h-32 m-2 shadow-xl/30 rounded-2xl"
-      >
+      <motion.div className="bg-white w-32 h-32 m-2 shadow-xl/30 rounded-2xl">
         <img
           src={job.company.logo}
           alt={job.company.name}

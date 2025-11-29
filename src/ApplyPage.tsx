@@ -1,58 +1,46 @@
 "use client";
 import { useSearchParams } from "react-router-dom";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm, type Resolver, type SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { jsPDF } from "jspdf";
 import { motion } from "framer-motion";
 import { cardItem, hoverTransition, listContainer } from "./utils/animations";
 import { useApplyStore, type Application } from "./store/applyStore";
-
-type FormData = yup.InferType<typeof schema>;
 
 const schema = yup.object({
   name: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   number: yup.string().required("Phone number is required"),
-  linkedin: yup.string().url().nullable().optional(),
-  portfolio: yup.string().url().nullable().optional(),
+  linkedin: yup.string().url().nullable(),
+  portfolio: yup.string().url().nullable(),
   cv: yup
     .mixed<FileList>()
     .test("required", "CV is required", (value) => value && value.length > 0),
-});
+}).required();
+
+type FormData = {
+  name: string;
+  lastName: string;
+  email: string;
+  number: string;
+  linkedin?: string | null;
+  portfolio?: string | null;
+  cv?: FileList;
+};
 
 export default function ApplyPage() {
   const [params] = useSearchParams();
-  const jobId = params.get("jobId");
-  const jobTitle = params.get("title");
+  const jobId = params.get("jobId") ?? "";
+  const jobTitle = params.get("title") ?? "";
 
   const { addApplication } = useApplyStore();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm<FormData>({
-    resolver: yupResolver(schema),
+  const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm<FormData>({
+    resolver: yupResolver(schema) as unknown as Resolver<FormData>,
     mode: "onChange",
   });
-
-  const generatePDF = (
-    data: FormData & { jobId: string | null; title: string | null }
-  ) => {
-    const doc = new jsPDF();
-    doc.setFontSize(16);
-    doc.text(`Job Application: ${data.title || "N/A"}`, 10, 20);
-    doc.setFontSize(12);
-    doc.text(`Name: ${data.name} ${data.lastName}`, 10, 30);
-    doc.text(`Email: ${data.email}`, 10, 40);
-    doc.text(`Phone: ${data.number}`, 10, 50);
-    if (data.linkedin) doc.text(`LinkedIn: ${data.linkedin}`, 10, 60);
-    if (data.portfolio) doc.text(`Portfolio: ${data.portfolio}`, 10, 70);
-    if (data.cv?.[0]) doc.text(`CV File: ${data.cv[0].name}`, 10, 80);
-    doc.save(`${data.name}_${data.lastName}_Application.pdf`);
-  };
+  
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const app: Application = {
@@ -65,10 +53,11 @@ export default function ApplyPage() {
       linkedin: data.linkedin || undefined,
       portfolio: data.portfolio || undefined,
       cvFileName: data.cv?.[0]?.name,
+      cvFile: data.cv?.[0],
     };
 
     addApplication(app);
-    generatePDF({ jobId, title: jobTitle, ...data });
+    reset();
   };
 
   const MotionInput = (name: keyof FormData, label: string, type = "text") => (
@@ -117,7 +106,6 @@ export default function ApplyPage() {
         {MotionInput("linkedin", "LinkedIn URL", "url")}
         {MotionInput("portfolio", "Portfolio URL", "url")}
 
-        {/* CV Upload */}
         <motion.div
           className="form__group relative"
           variants={cardItem}
@@ -150,7 +138,7 @@ export default function ApplyPage() {
           whileTap={{ scale: 0.98 }}
           transition={hoverTransition}
         >
-          Submit & Download PDF
+          Submit
         </motion.button>
       </motion.form>
     </motion.div>
