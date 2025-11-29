@@ -1,10 +1,25 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import "./index.css";
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import App from "./App";
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+import JobsPage from "./job/JobsPage";
+import ApplyPage from "./ApplyPage";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      { index: true, element: <JobsPage /> },
+      { path: "apply", element: <ApplyPage /> },
+    ],
+  },
+]);
+
+createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);

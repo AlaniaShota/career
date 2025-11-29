@@ -18,6 +18,7 @@ export default function JobDetailsWrapper({ selectedJob }: Props) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
           transition={{ duration: 0.2 }}
+          className="w-full bg-white rounded-2xl"
         >
           <JobDetails job={selectedJob} />
         </motion.div>

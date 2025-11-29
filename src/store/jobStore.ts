@@ -12,18 +12,47 @@ export interface Job {
   id: number;
   title: string;
   company: {
-    id: number;
+    id: string;
     name: string;
     logo: string;
     industry: string;
+    companySize?: string;
+    companyType?: string;
+    website?: string;
+    headquarters?: string;
   };
   location: string;
   remote: boolean;
+  workArrangement?: "On-site" | "Remote" | "Hybrid" | string;
   salary: string;
-  employmentType: string;
-  experienceLevel: string;
+  salaryRange?: {
+    min: number;
+    max: number;
+    currency: string;
+  };
+  employmentType:
+    | "Full-time"
+    | "Part-time"
+    | "Contract"
+    | "Internship"
+    | "Temporary"
+    | string;
+  experienceLevel?: "Junior" | "Mid" | "Senior" | string;
   skills: string[];
+  description?: string;
+  fullDescription?: string;
+  requirements?: string[];
+  benefits?: string[];
+  languages?: string[];
+  contact?: {
+    recruiterName?: string;
+    recruiterEmail?: string;
+  };
+  applyLink?: string;
+  status?: boolean;
   postedAt: string;
+  views?: number;
+  tags?: string[];
 }
 
 interface Filter {

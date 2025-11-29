@@ -1,12 +1,27 @@
+@import "tailwindcss/preflight"; /* базовые стили */
+@tailwind utilities; /* все утилиты Tailwind */
 @import "tailwindcss";
 
-@theme {
-  --color-gstore-blue: #3a6ff8;
-  --color-gstore-midnight: #0c1220;
-  --color-magic-gold: #f5c96b;
-  --color-soft-silver: #dde2e9;
+/* свои кастомные стили можно писать ниже */
+body {
+  font-family: sans-serif;
+  margin: 0;
 }
 
-* {
-  box-sizing: border-box;
+/* Скрываем скроллбар для всех браузеров */
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.hide-scroll {
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+.hide-scroll {
+  -webkit-overflow-scrolling: touch;
 }

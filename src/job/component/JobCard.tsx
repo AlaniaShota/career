@@ -36,7 +36,7 @@ export default function JobCards({ job, selectedJob, onSelect }: Props) {
 
   return (
     <motion.div
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6"
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 w-full gap-6"
       variants={listContainer}
       initial="hidden"
       animate="visible"
@@ -45,7 +45,7 @@ export default function JobCards({ job, selectedJob, onSelect }: Props) {
         const isSelected = selectedJob?.id === item.id;
         const isOtherSelected = !!selectedJob && !isSelected;
 
-        const { className } = getJobCardClass(isSelected);
+        const { className } = getJobCardClass(isSelected, isOtherSelected);
 
         return (
           <motion.div
@@ -57,7 +57,7 @@ export default function JobCards({ job, selectedJob, onSelect }: Props) {
             onClick={() => onSelect(item)}
             className={className}
           >
-            <Card job={item} expanded/>
+            <Card job={item} expanded />
           </motion.div>
         );
       })}
@@ -67,14 +67,13 @@ export default function JobCards({ job, selectedJob, onSelect }: Props) {
 
 function Card({ job, expanded }: { job: Job; expanded: boolean }) {
   return (
-    <motion.div
-      layout
-      className="flex flex-col p-4 rounded-2xl shadow-xl/30 bg-white"
-    >
-      {/* Верхняя часть */}
+    <motion.div layout className="flex flex-col p-4">
       <div className="flex justify-between items-center">
         <div className="flex flex-row items-center">
-          <motion.div variants={cardInnerItem} className="p-2 rounded-2xl">
+          <motion.div
+            variants={cardInnerItem}
+            className="p-2 bg-white shadow-xl/30 rounded-2xl"
+          >
             <img
               src={job.company.logo}
               alt={job.company.name}
@@ -105,12 +104,17 @@ function Card({ job, expanded }: { job: Job; expanded: boolean }) {
           </div>
         </div>
 
-        <motion.p className="text-xs text-gray-400" variants={cardInnerItem}>
-          Posted: {new Date(job.postedAt).toLocaleDateString()}
-        </motion.p>
+        <div className="flex flex-col justify-end my-1 items-center">
+          <motion.p className="text-xs text-gray-400" variants={cardInnerItem}>
+            {new Date(job.postedAt).toLocaleDateString()}
+          </motion.p>
+          {job.remote && (
+            <div className="bg-magic-gold px-2 py-1 rounded">
+              <p className="text-gstore-midnight text-sm font-medium">Remote</p>
+            </div>
+          )}
+        </div>
       </div>
-
-      {/* Раскрывающийся блок */}
       {expanded && (
         <motion.div
           layout
@@ -118,7 +122,7 @@ function Card({ job, expanded }: { job: Job; expanded: boolean }) {
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
           transition={{ duration: 0.3 }}
-          className="mt-4 p-3 rounded-xl bg-gray-50"
+          className="mt-4 p-3 rounded-xl bg-white"
         >
           <p className="text-sm mb-2">
             {job.description ?? "No description provided."}

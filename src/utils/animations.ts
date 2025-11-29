@@ -47,7 +47,7 @@ export function getJobCardClass(isSelected: boolean, isOtherSelected: boolean) {
   return {
     className: `cursor-pointer rounded-2xl transition-all ${
       isSelected
-        ? "bg-blue-50 shadow-xl border border-blue-300"
+        ? "bg-blue-50 shadow-2xl border border-blue-300"
         : "bg-white shadow-sm border border-gray-200"
     }`,
     style: { opacity: isOtherSelected ? 0.2 : 1 },
