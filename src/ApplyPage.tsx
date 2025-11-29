@@ -6,31 +6,28 @@ import * as yup from "yup";
 import { jsPDF } from "jspdf";
 import { motion } from "framer-motion";
 import { cardItem, hoverTransition, listContainer } from "./utils/animations";
+import { useApplyStore, type Application } from "./store/applyStore";
 
-/* ---------------------- YUP SCHEMA ---------------------- */
+type FormData = yup.InferType<typeof schema>;
 
 const schema = yup.object({
-  name: yup.string().required("Name is required"),
+  name: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   number: yup.string().required("Phone number is required"),
-
-  linkedin: yup.string().url().nullable().optional().notRequired(),
-  portfolio: yup.string().url().nullable().optional().notRequired(),
-
+  linkedin: yup.string().url().nullable().optional(),
+  portfolio: yup.string().url().nullable().optional(),
   cv: yup
     .mixed<FileList>()
     .test("required", "CV is required", (value) => value && value.length > 0),
 });
 
-type FormData = yup.InferType<typeof schema>;
-
-/* -------------------------------------------------------- */
-
 export default function ApplyPage() {
   const [params] = useSearchParams();
   const jobId = params.get("jobId");
-  const title = params.get("title");
+  const jobTitle = params.get("title");
+
+  const { addApplication } = useApplyStore();
 
   const {
     register,
@@ -41,40 +38,52 @@ export default function ApplyPage() {
     mode: "onChange",
   });
 
-  /* ---------------------- PDF GENERATION ---------------------- */
-
-  const generatePDF = (data: FormData & { jobId?: string | null; title?: string | null }) => {
+  const generatePDF = (
+    data: FormData & { jobId: string | null; title: string | null }
+  ) => {
     const doc = new jsPDF();
-
     doc.setFontSize(16);
     doc.text(`Job Application: ${data.title || "N/A"}`, 10, 20);
-
     doc.setFontSize(12);
     doc.text(`Name: ${data.name} ${data.lastName}`, 10, 30);
     doc.text(`Email: ${data.email}`, 10, 40);
     doc.text(`Phone: ${data.number}`, 10, 50);
-
     if (data.linkedin) doc.text(`LinkedIn: ${data.linkedin}`, 10, 60);
     if (data.portfolio) doc.text(`Portfolio: ${data.portfolio}`, 10, 70);
-
     if (data.cv?.[0]) doc.text(`CV File: ${data.cv[0].name}`, 10, 80);
-
     doc.save(`${data.name}_${data.lastName}_Application.pdf`);
   };
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    generatePDF({ jobId, title, ...data });
+    const app: Application = {
+      jobId,
+      jobTitle,
+      name: data.name,
+      lastName: data.lastName,
+      email: data.email,
+      number: data.number,
+      linkedin: data.linkedin || undefined,
+      portfolio: data.portfolio || undefined,
+      cvFileName: data.cv?.[0]?.name,
+    };
+
+    addApplication(app);
+    generatePDF({ jobId, title: jobTitle, ...data });
   };
 
-
-  const motionField = (name: keyof FormData, label: string, type = "text") => (
+  const MotionInput = (name: keyof FormData, label: string, type = "text") => (
     <motion.div
       className="form__group relative"
       variants={cardItem}
       whileHover={{ scale: 1.01, boxShadow: "0 8px 15px rgba(0,0,0,0.2)" }}
       transition={hoverTransition}
     >
-      <input type={type} placeholder=" " {...register(name)} className="form__field rounded-2xl" />
+      <input
+        type={type}
+        placeholder=" "
+        {...register(name)}
+        className="form__field rounded-2xl"
+      />
       <label className="form__label">{label}</label>
       {errors[name] && (
         <motion.p
@@ -95,19 +104,18 @@ export default function ApplyPage() {
       initial="hidden"
       animate="visible"
     >
-      <h1 className="text-2xl font-bold mb-6">{title}</h1>
-
+      <h1 className="text-2xl font-bold mb-6">{jobTitle}</h1>
       <motion.form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-5"
         variants={listContainer}
       >
-        {motionField("name", "First Name *")}
-        {motionField("lastName", "Last Name *")}
-        {motionField("email", "Email *", "email")}
-        {motionField("number", "Phone Number *", "tel")}
-        {motionField("linkedin", "LinkedIn URL", "url")}
-        {motionField("portfolio", "Portfolio URL", "url")}
+        {MotionInput("name", "First Name *")}
+        {MotionInput("lastName", "Last Name *")}
+        {MotionInput("email", "Email *", "email")}
+        {MotionInput("number", "Phone Number *", "tel")}
+        {MotionInput("linkedin", "LinkedIn URL", "url")}
+        {MotionInput("portfolio", "Portfolio URL", "url")}
 
         {/* CV Upload */}
         <motion.div
@@ -123,15 +131,17 @@ export default function ApplyPage() {
             accept=".pdf"
           />
           <label className="form__label">Upload CV *</label>
-
           {errors.cv && (
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-500 text-sm mt-1">
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-red-500 text-sm mt-1"
+            >
               {errors.cv.message}
             </motion.p>
           )}
         </motion.div>
 
-        {/* SUBMIT BUTTON */}
         <motion.button
           type="submit"
           disabled={!isValid}
