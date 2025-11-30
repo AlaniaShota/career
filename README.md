@@ -1,74 +1,36 @@
-# React + TypeScript + Vite
+# Career
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Career - is a web application for finding jobs and managing applications. It is built with React, TypeScript, and Vite, and uses Zustand for state management and Tailwind CSS for responsive design. The app has job filters, dynamic job cards, and smooth animations with Framer Motion.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Install dependencies:
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+  npm install
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+run the project:
+```bash
+  npm run dev
 ```
-# career
+and you are all set!
+
+## Technical decisions
+
+~ Vite + TypeScript – used Vite because it builds the project fast and works well with TypeScript. It is easy to set up and helps write safer code.
+
+~ React + Tailwind CSS – React is used to create the user interface and Tailwind CSS for styling. The design is simple, clean, and works on all devices.
+
+~ Zustand – used to manage the app state. It makes the code easier to read and maintain.
+
+~ Future improvements:
+
+I plan to add smooth animations using Framer Motion to make the app more interactive.
+
+I want to save user actions or filters so the user can return to previous searches.
+
+I will improve the code by typing all components fully. This will reduce bugs and make the project easier to work on in the future.
+
+## Demo
+
+https://sjob.netlify.app/
