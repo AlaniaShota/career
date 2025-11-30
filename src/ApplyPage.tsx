@@ -102,7 +102,7 @@ export default function ApplyPage() {
       initial="hidden"
       animate="visible"
     >
-      <h1 className="text-2xl font-bold mb-6">{jobTitle}</h1>
+      <h1 className="text-2xl font-semibold mb-6">{jobTitle}</h1>
       <motion.form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-5"

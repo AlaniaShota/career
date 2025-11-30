@@ -7,7 +7,7 @@ interface JobActionsProps {
 export default function JobActions({ job }: JobActionsProps) {
   if (!job.status)
     return (
-      <div className="px-4 py-2 font-semibold bg-gray-200 rounded-lg text-center">
+      <div className="px-4 py-2 font-thin bg-gray-200 rounded-lg text-center">
         <h4 className="text-gstore-midnight">Closed</h4>
       </div>
     );

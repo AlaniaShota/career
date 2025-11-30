@@ -3,6 +3,12 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      maxHeight: {
+        "job-details-height": "670px",
+      },
+      height: {
+        "job-details-height": "670px",
+      },
       colors: {
         "gstore-blue": "#1E40AF",
         "gstore-midnight": "#0F172A",

@@ -38,7 +38,7 @@ export default function AdminPage() {
             Download CV
           </Button>
         ) : (
-          <span className="text-gray-400 text-sm">No CV</span>
+          <span className="text-gray-400 font-thin text-sm">No CV</span>
         )
       ),
     },
@@ -48,7 +48,7 @@ export default function AdminPage() {
 
   return (
     <div className="w-4/5 mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
-      <h1 className="text-2xl font-bold mb-6">Admin Panel</h1>
+      <h1 className="text-2xl font-semibold mb-6">Admin Panel</h1>
       <MaterialReactTable
         columns={columns}
         data={applications}

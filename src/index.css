@@ -8,12 +8,14 @@
   --color-magic-gold: #f5c96b;
   --color-soft-silver: #dde2e9;
   --color-soft-sky: rgba(203, 222, 248, 1);
+  --job-details-height: 680px;
 }
 
 * {
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
-  font-weight: 200;
+  font-weight: 100;
+  /* font-weight: 300; */
 }
 
 .hide-scroll::-webkit-scrollbar {

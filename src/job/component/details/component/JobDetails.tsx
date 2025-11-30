@@ -16,7 +16,7 @@ interface JobDetailsProps {
 }
 export default function JobDetails({ job }:JobDetailsProps) {
   return (
-    <motion.div className="bg-white p-4 shadow-2xl rounded-2xl my-4 flex flex-col gap-2 max-h-[840px] overflow-y-auto hide-scroll scroll-smooth">
+    <motion.div className="bg-white p-4 shadow-2xl rounded-2xl my-4 flex flex-col gap-2 max-h-(--job-details-height) overflow-y-auto hide-scroll scroll-smooth">
       <JobHeader job={job} />
       <JobMeta job={job} />
       <JobSkills skills={job.skills} />

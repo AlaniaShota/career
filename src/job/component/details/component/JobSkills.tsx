@@ -10,7 +10,7 @@ interface JobSkillsProps {
         {skills.map((skill) => (
           <span
             key={skill}
-            className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-sm"
+            className="bg-blue-100 text-blue-600 font-thin px-2 py-1 rounded text-sm"
           >
             {skill}
           </span>

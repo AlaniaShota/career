@@ -14,7 +14,7 @@ export default function ApplyByEmailOrForm({
   return (
     <a href={gmailLink} target="_blank" rel="noopener noreferrer">
       <button className="px-4 py-2 bg-soft-sky cursor-pointer text-white rounded">
-        <span className="text-gstore-midnight">Send Email</span>
+        <span className="text-gstore-midnight font-thin">Send Email</span>
       </button>
     </a>
   );

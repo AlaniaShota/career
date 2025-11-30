@@ -68,7 +68,7 @@ export default function JobCards({ job, selectedJob, onSelect }: Props) {
 function Card({ job, expanded }: { job: Job; expanded: boolean }) {
   return (
     <motion.div layout className="flex flex-col p-4">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-end ">
         <div className="flex flex-row items-center">
           <motion.div
             variants={cardInnerItem}
@@ -83,7 +83,7 @@ function Card({ job, expanded }: { job: Job; expanded: boolean }) {
 
           <div className="flex flex-col ml-4">
             <motion.h5
-              className="font-semibold"
+              className="font-thin"
               variants={cardInnerItem}
               style={{ color: "var(--color-gstore-blue)" }}
             >
@@ -92,7 +92,7 @@ function Card({ job, expanded }: { job: Job; expanded: boolean }) {
 
             <motion.h3
               variants={cardInnerItem}
-              className="font-bold cursor-pointer"
+              className="font-semibold cursor-pointer"
               whileHover={{ y: -2, color: "var(--color-gstore-blue)" }}
             >
               {job.title}
@@ -104,13 +104,13 @@ function Card({ job, expanded }: { job: Job; expanded: boolean }) {
           </div>
         </div>
 
-        <div className="flex flex-col justify-end my-1 items-center">
+        <div className="flex flex-col justify-end my-1 gao-6 items-center">
           <motion.p className="text-xs text-gray-400" variants={cardInnerItem}>
             {new Date(job.postedAt).toLocaleDateString()}
           </motion.p>
           {job.remote && (
-            <div className="bg-magic-gold px-2 py-1 rounded">
-              <p className="text-gstore-midnight text-sm font-medium">Remote</p>
+            <div className="bg-magic-gold px-2 rounded">
+              <p className="text-gstore-midnight text-sm font-medium my-1">Remote</p>
             </div>
           )}
         </div>
@@ -132,7 +132,7 @@ function Card({ job, expanded }: { job: Job; expanded: boolean }) {
             {job.skills?.map((skill) => (
               <span
                 key={skill}
-                className="px-2 py-1 text-xs bg-blue-100 text-blue-600 rounded-lg"
+                className="px-2 py-1 font-thin text-xs bg-blue-100 text-blue-600 rounded-lg"
               >
                 {skill}
               </span>

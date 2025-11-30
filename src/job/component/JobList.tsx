@@ -69,14 +69,14 @@ export default function JobList({ job }: Props) {
 
         {!isMobile && (
           <div
-            className="w-full md:w-2/5 flex flex-col justify-end items-end sticky self-start"
-            ref={detailsRef}
-          >
-            <JobsFilter jobs={safeJobs} />
-            <AnimatePresence>
-              <JobDetailsWrapper selectedJob={selectedJob} />
-            </AnimatePresence>
-          </div>
+          className="w-full md:w-2/5 flex flex-col items-end sticky top-4 self-start"
+          ref={detailsRef}
+        >
+          <JobsFilter jobs={safeJobs} />
+          <AnimatePresence>
+            <JobDetailsWrapper selectedJob={selectedJob} />
+          </AnimatePresence>
+        </div>
         )}
       </div>
     </FormProvider>
