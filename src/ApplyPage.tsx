@@ -102,7 +102,7 @@ export default function ApplyPage() {
       initial="hidden"
       animate="visible"
     >
-      <h1 className="text-2xl font-semibold mb-6">{jobTitle}</h1>
+      <h1 className="text-2xl font-medium mb-6">{jobTitle}</h1>
       <motion.form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-5"
@@ -142,7 +142,7 @@ export default function ApplyPage() {
         <motion.button
           type="submit"
           disabled={!isValid}
-          className="px-5 py-3 bg-f83e55 rounded-lg font-semibold hover:bg-faa71a transition-colors disabled:opacity-50"
+          className="px-5 py-3 bg-f83e55 rounded-lg font-medium hover:bg-faa71a transition-colors disabled:opacity-50"
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.98 }}
           transition={hoverTransition}
@@ -154,7 +154,7 @@ export default function ApplyPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="text-green-400 text-center font-semibold mb-2"
+            className="text-green-400 text-center font-base mb-2"
           >
             {successMessage}
           </motion.p>

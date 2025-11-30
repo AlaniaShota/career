@@ -17,7 +17,7 @@ export default function JobHeader({ job }: JobHeaderProps) {
       </motion.div>
 
       <div className="flex flex-col items-start justify-end mx-4">
-        <h3 className="text-xl text-gstore-midnight font-semibold">
+        <h3 className="text-xl text-gstore-midnight font-medium">
           {job.title}
         </h3>
         <p className="text-gray-400">

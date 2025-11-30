@@ -6,7 +6,7 @@ interface JobMetaProps {
 
 export default function JobMeta({ job }: JobMetaProps) {
   return (
-    <div className="flex flex-col mx-2 my-5 gap-2">
+    <div className="flex flex-col mx-2 my-5 gap-2 font-medium">
       <Row label="Work" value={job.workArrangement} />
       <Row label="Salary" value={job.salary} />
       <Row label="Experience" value={job.experienceLevel} />
@@ -24,7 +24,7 @@ function Row({ label, value }: RowProps) {
 
   return (
     <div className="flex flex-row items-center">
-      <h4 className="font-semibold">{label}: </h4>
+      <h4 className="font-medium">{label}: </h4>
       <p className="text-sm text-gray-700 pl-2">{value}</p>
     </div>
   );

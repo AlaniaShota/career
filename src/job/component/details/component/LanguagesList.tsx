@@ -3,7 +3,7 @@ export default function LanguagesList({ languages }: { languages?: string[] }) {
   
     return (
       <div className="mt-4">
-        <h4 className="font-semibold mb-2">Languages:</h4>
+        <h4 className="font-medium mb-2">Languages:</h4>
         <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
           {languages.map((lang, index) => (
             <li key={index}>{lang}</li>

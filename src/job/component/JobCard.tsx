@@ -92,7 +92,7 @@ function Card({ job, expanded }: { job: Job; expanded: boolean }) {
 
             <motion.h3
               variants={cardInnerItem}
-              className="font-semibold cursor-pointer"
+              className="font-medium cursor-pointer"
               whileHover={{ y: -2, color: "var(--color-gstore-blue)" }}
             >
               {job.title}
