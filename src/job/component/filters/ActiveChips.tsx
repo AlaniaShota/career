@@ -1,5 +1,5 @@
 import { type UseFormSetValue } from "react-hook-form";
-import type { FilterForm } from "../JobsFilter";
+import type { FilterForm } from "../details/components/JobsFilter";
 
 interface Props {
   watch: () => FilterForm;

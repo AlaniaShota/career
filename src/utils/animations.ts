@@ -27,7 +27,7 @@ export const cardItem: Variants = {
 
 export const cardWrapperHover = {
   scale: 1.01,
-  y: -2,
+  y: 1,
   boxShadow: "0 15px 25px rgba(0,0,0,0.18)",
 };
 
@@ -45,7 +45,7 @@ export const cardInnerItem: Variants = {
 };
 export function getJobCardClass(isSelected: boolean, isOtherSelected: boolean) {
   return {
-    className: `cursor-pointer rounded-2xl transition-all ${
+    className: `cursor-pointer w-full rounded-2xl transition-all ${
       isSelected
         ? "bg-blue-50 shadow-2xl border border-blue-300"
         : "bg-white shadow-sm border border-gray-200"

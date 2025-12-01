@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import SearchInput from "./filters/SearchInput";
-import IndustryFilter from "./filters/IndustryFilter";
-import SkillFilter from "./filters/SkillFilter";
-import ExperienceFilter from "./filters/ExperienceFilter";
-import SortFilter from "./filters/SortFilter";
-import RemoteToggle from "./filters/RemoteToggle";
-import ActiveChips from "./filters/ActiveChips";
-import type { Job } from "../../store/jobStore";
+import SearchInput from "../../filters/SearchInput";
+import IndustryFilter from "../../filters/IndustryFilter";
+import SkillFilter from "../../filters/SkillFilter";
+import ExperienceFilter from "../../filters/ExperienceFilter";
+import SortFilter from "../../filters/SortFilter";
+import RemoteToggle from "../../filters/RemoteToggle";
+import ActiveChips from "../../filters/ActiveChips";
+import type { Job } from "../../../../store/jobStore";
 
 export interface FilterForm {
   search: string;
@@ -29,7 +29,7 @@ export default function JobsFilter({ jobs }: Props) {
   const skills = Array.from(new Set(jobs.flatMap((j) => j.skills)));
 
   return (
-    <form className="w-1/2 bg-white mt-4 rounded-2xl shadow-2xl">
+    <form className=" bg-white mt-4 rounded-2xl shadow-2xl">
       <div className="flex justify-end items-center gap-2 w-full ">
         <div className="w-full">
           <SearchInput control={control} name="search" />

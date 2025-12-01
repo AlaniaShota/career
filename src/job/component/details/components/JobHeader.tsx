@@ -2,9 +2,11 @@
 
 import { motion } from "framer-motion";
 import type { Job } from "../../../../store/jobStore";
+
 interface JobHeaderProps {
   job: Job;
 }
+
 export default function JobHeader({ job }: JobHeaderProps) {
   return (
     <div className="flex flex-row justify-start items-center">

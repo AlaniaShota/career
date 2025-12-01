@@ -1,5 +1,5 @@
 import { Controller, type Control } from "react-hook-form";
-import type { FilterForm } from "../JobsFilter";
+import type { FilterForm } from "../details/components/JobsFilter";
 
 interface Props {
   control: Control<FilterForm>;
@@ -23,7 +23,7 @@ export default function ExperienceFilter({ control, name }: Props) {
               {...field}
               value={value}
               onChange={(e) =>
-                field.onChange(e.target.value || null) // null если сброс
+                field.onChange(e.target.value || null) 
               }
               className="border px-3 py-2 rounded w-full"
             >

@@ -1,39 +1,22 @@
 "use client";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState, useMemo } from "react";
+
+import { useJobStore } from "../store/jobStore";
 import JobList from "./component/JobList";
-import type { Job } from "../store/jobStore";
 
 export default function JobsPage() {
-  const [allJobs, setAllJobs] = useState<Job[]>([]);
-  const [visibleJobs, setVisibleJobs] = useState<Job[]>([]);
-  const [next, setNext] = useState(10); 
-  const [loading, setLoading] = useState(false);
+  const jobs = useJobStore((state) => state.jobs);
+  const fetchJobs = useJobStore((state) => state.fetchJobs);
+  const loading = useJobStore((state) => state.loading);
 
-  const loadMoreJobs = () => {
-    if (loading) return;
-    if (visibleJobs.length >= allJobs.length) return;
-
-    setLoading(true);
-    setTimeout(() => {
-      const newNext = next + 15;
-      setVisibleJobs(allJobs.slice(0, newNext));
-      setNext(newNext);
-      setLoading(false);
-    }, 500);
-  };
+  const [next, setNext] = useState(10);
+  console.log(jobs);
 
   useEffect(() => {
-    axios
-      .get<Job[]>("/jobs.json")
-      .then((res) => {
-        setAllJobs(res.data);
-        setVisibleJobs(res.data.slice(0, 10));
-      })
-      .catch((err) => {
-        console.error("Error loading jobs:", err);
-      });
-  }, []);
+    fetchJobs();
+  }, [fetchJobs]);
+
+  const visibleJobs = useMemo(() => jobs.slice(0, next), [jobs, next]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,19 +24,14 @@ export default function JobsPage() {
         window.innerHeight + window.scrollY >=
         document.body.offsetHeight - 200
       ) {
-        loadMoreJobs(); 
+        setNext((prev) => Math.min(prev + 15, jobs.length));
       }
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [visibleJobs, allJobs, loading, next]); 
-  
+  }, [jobs.length]);
 
-  return (
-    <>
-      <JobList job={visibleJobs} />
-      {loading && <p className="text-center my-4">Loading...</p>}
-    </>
-  );
+  if (loading) return <p className="text-center my-4">Loading jobs...</p>;
+
+  return <JobList jobs={visibleJobs} />;
 }

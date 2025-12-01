@@ -7,7 +7,7 @@ import App from "./App";
 import JobsPage from "./job/JobsPage";
 import ApplyPage from "./ApplyPage";
 import AdminPage from "./AdminPage";
-import JobDetailsMobile from "./job/component/details/JobDetailsMobile";
+import JobDetailsPage from "./job/component/details/components/JobDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +17,10 @@ const router = createBrowserRouter([
       { index: true, element: <JobsPage /> },
       { path: "apply", element: <ApplyPage /> },
       { path: "admin", element: <AdminPage /> },
-      { path: "jobs/:id", element: <JobDetailsMobile /> }
+      {
+        path: "jobs/:id",
+        element: <JobDetailsPage />,
+      },
     ],
   },
 ]);

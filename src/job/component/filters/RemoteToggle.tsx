@@ -1,5 +1,5 @@
 import { Controller, type Control } from "react-hook-form";
-import type { FilterForm } from "../JobsFilter";
+import type { FilterForm } from "../details/components/JobsFilter";
 
 interface Props {
   control: Control<FilterForm>;
@@ -16,7 +16,7 @@ export default function RemoteToggle({ control, name }: Props) {
           <label className="flex items-center gap-2">
             <input
               type="checkbox"
-              checked={!!field.value} // привели к boolean
+              checked={!!field.value}
               onChange={(e) => field.onChange(e.target.checked)}
             />
             Remote

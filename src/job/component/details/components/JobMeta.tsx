@@ -1,5 +1,6 @@
 import type { Job } from "../../../../store/jobStore";
 
+
 interface JobMetaProps {
   job: Job;
 }
