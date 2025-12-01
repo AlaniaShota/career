@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import ApplyByEmailOrForm from "./ApplyByEmailOrForm";
-import type { Job } from "../../../../store/jobStore";
+import type { Job } from "../../store/jobStore";
 interface JobActionsProps {
   job: Job;
 }
