@@ -29,7 +29,7 @@ export default function JobList({ jobs }: Props) {
   return (
     <FormProvider {...methods}>
       <div className="flex flex-col md:flex-row gap-6 w-full">
-        <div className="flex flex-col justify-end items-end gap-4 w-full">
+        <div className="flex flex-col md:flex-row justify-end md:items-start items-end gap-4 w-full">
           <JobsFilter jobs={safeJobs} />
           <JobCards
             jobs={safeJobs}

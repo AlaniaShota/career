@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import JobSkills from "./components/JobSkills";
 import JobDescription from "./components/JobDescription";
-import JobActions from "../JobActions";
+import JobActions from "./components/JobActions";
 import RequirementsList from "./components/RequirementsList";
 import BenefitsList from "./components/BenefitsList";
 import LanguagesList from "./components/LanguagesList";

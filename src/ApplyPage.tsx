@@ -154,7 +154,7 @@ export default function ApplyPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="text-green-400 text-center font-base mb-2"
+            className="text-green-400 text-center font-medium mb-2"
           >
             {successMessage}
           </motion.p>

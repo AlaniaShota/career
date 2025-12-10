@@ -9,7 +9,6 @@ const Footer = () => {
       <h2
         className={`text-whiteSecond text-center w-full my-10 cursor-default`}
       >
-        {/* {inc} */}
       </h2>
     </div>
   );
