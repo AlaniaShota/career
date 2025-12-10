@@ -1,7 +1,8 @@
-import { motion } from "framer-motion";
-import { useMemo } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
-
+import { FaEye } from "react-icons/fa";
+import defaultLogo from "../../../public/163.jpg";
 import type { FilterForm } from "./details/components/JobsFilter";
 import type { Job } from "../../store/jobStore";
 
@@ -10,11 +11,13 @@ import {
   cardItem,
   cardWrapperHover,
   hoverTransition,
-  cardInnerItem,
   getJobCardClass,
+  cardInnerItem,
+  unifiedTransition,
 } from "../../utils/animations";
 import { filterAndSortJobs } from "../../utils/jobs";
 import Button from "../../component/Button";
+import { Link } from "react-router-dom";
 
 interface Props {
   jobs: Job[];
@@ -36,7 +39,7 @@ export default function JobCards({ jobs, selectedJobId, onSelect }: Props) {
 
   return (
     <motion.div
-      className="flex flex-col justify-center items-center w-full gap-4"
+      className="flex flex-col justify-center items-center w-3/5 gap-4"
       variants={listContainer}
       initial="hidden"
       animate="visible"
@@ -57,7 +60,7 @@ export default function JobCards({ jobs, selectedJobId, onSelect }: Props) {
             onClick={() => onSelect(job)}
             className={className}
           >
-            <Card job={job} expanded />
+            <Card job={job} />
           </motion.div>
         );
       })}
@@ -65,95 +68,212 @@ export default function JobCards({ jobs, selectedJobId, onSelect }: Props) {
   );
 }
 
-// function Card({ job, expanded }: { job: Job; expanded: boolean }) {
-//   return (
-//     <motion.div layout className="flex flex-col p-4 bg-white rounded-2xl">
-//       <div className="flex justify-between items-start">
-//         <div className="flex items-center gap-4">
-//           <motion.div
-//             variants={cardInnerItem}
-//             className="p-2 rounded-2xl shadow-md bg-white"
-//           >
-//             <img
-//               src={job.company.logo}
-//               alt={job.company.name}
-//               className="w-16 h-16"
-//             />
-//           </motion.div>
-//           <div className="flex flex-col">
-//             <motion.h5
-//               variants={cardInnerItem}
-//               className="font-thin text-gstore-blue"
-//             >
-//               {job.company.name}
-//             </motion.h5>
-//             <h3>{job.location}</h3>
-//             {/* <motion.h3
-//               variants={cardInnerItem}
-//               className="font-medium cursor-pointer"
-//               whileHover={{ y: -2, color: "#1D4ED8" }}
-//             >
-//               {job.title}
-//             </motion.h3> */}
-//             <motion.div variants={cardInnerItem}>
-//               <p className="text-sm text-gray-500">{job.company.industry}</p>
-//             </motion.div>
-//           </div>
-//         </div>
+const Section = ({
+  title,
+  children,
+  delay,
+}: {
+  title: string;
+  children: React.ReactNode;
+  delay: number;
+}) => (
+  <motion.div
+    initial={{ opacity: 0, y: 8 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay }}
+  >
+    <h4 className="font-semibold text-sm mb-1">{title}</h4>
+    {children}
+  </motion.div>
+);
 
-//         <div className="flex flex-col items-center gap-2">
-//           <motion.p className="text-xs text-gray-400" variants={cardInnerItem}>
-//             {new Date(job.postedAt).toLocaleDateString()}
-//           </motion.p>
-//           {job.remote && (
-//             <div className="bg-yellow-300 px-2 rounded">
-//               <p className="text-xs font-medium text-gray-800">Remote</p>
-//             </div>
-//           )}
-//         </div>
-//       </div>
+const ListSection = ({
+  title,
+  items,
+  delay,
+}: {
+  title: string;
+  items?: string[];
+  delay: number;
+}) =>
+  items?.length ? (
+    <Section title={title} delay={delay}>
+      <ul className="list-disc list-inside text-sm space-y-1 text-gray-700">
+        {items.map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ul>
+    </Section>
+  ) : null;
 
-//       {expanded && (
-//         <motion.div
-//           layout
-//           initial={{ opacity: 0, height: 0 }}
-//           animate={{ opacity: 1, height: "auto" }}
-//           exit={{ opacity: 0, height: 0 }}
-//           transition={{ duration: 0.3 }}
-//           className="mt-4 p-3 rounded-xl bg-gray-50"
-//         >
-//           <p className="text-sm mb-2">{job.description ?? "No description"}</p>
-//           <div className="flex gap-2 flex-wrap">
-//             {job.skills?.map((skill) => (
-//               <span
-//                 key={skill}
-//                 className="px-2 py-1 text-xs font-thin bg-blue-100 text-blue-600 rounded-lg"
-//               >
-//                 {skill}
-//               </span>
-//             ))}
-//           </div>
-//         </motion.div>
-//       )}
-//     </motion.div>
-//   );
-// }
+function Card({ job }: { job: Job }) {
+  const [isOpen, setIsOpen] = useState(false);
 
-function Card({ job, expanded }: { job: Job; expanded: boolean }) {
   return (
-    <motion.div layout>
-      <div className="flex flex-row justify-between items-center">
-        <div className="flex justify-center flex-row items-center">
-          <img src={job.company.logo} alt={job.company.name} />
-          <h2>{job.company.name}</h2>
-        </div>
-        <div className="flex justify-center flex-row items-center">
-          <p>{job.views}</p>
-          <Button
-            to={`/apply?jobId=${job.id}&title=${encodeURIComponent(job.title)}`}
+    <motion.div
+      layout="position"
+      transition={{ layout: unifiedTransition }}
+      className="p-6 bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-4 cursor-pointer"
+    >
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-3">
+          <img
+            src={job.company.logo}
+            alt={job.company.name}
+            className="w-12 h-12 rounded-full object-cover"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = defaultLogo;
+            }}
           />
+
+          <div>
+            <h2 className="text-lg text-gstore-blue">{job.company.name}</h2>
+            <p className="text-gray-500 text-sm">
+              {job.location} • {job.workArrangement}
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1 text-gray-600">
+            <FaEye />
+            <p>{job.views}</p>
+          </div>
+
+          <Link
+            to={`/apply?jobId=${job.id}&title=${encodeURIComponent(job.title)}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Button>Apply</Button>
+          </Link>
         </div>
       </div>
+      <motion.div
+        variants={cardInnerItem}
+        initial="hidden"
+        animate="visible"
+        className="font-medium cursor-pointer flex flex-row justify-between items-center w-full"
+        whileHover={{ y: -1, color: "#1D4ED8" }}
+      >
+        <h3 className="text-xl font-light">{job.title}</h3>
+
+        <p className="text-xl font-light">
+          {job.salaryRange
+            ? `$${job.salaryRange.min.toLocaleString()} – $${job.salaryRange.max.toLocaleString()}`
+            : job.salary}
+        </p>
+      </motion.div>
+      {job.description && (
+        <p className="text-gray-700 text-sm">{job.description}</p>
+      )}
+      <div className="flex justify-end items-center">
+        <Button
+          variant="secondary"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsOpen((prev) => !prev);
+          }}
+        >
+          {isOpen ? "Show less" : "Show more"}
+        </Button>
+      </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            layout="position"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={unifiedTransition}
+            className="border-t border-gray-200 pt-4"
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            layout="size"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={unifiedTransition}
+            className="overflow-hidden cursor-default"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="grid grid-cols-2 gap-8 pt-2">
+              <div className="space-y-6">
+                <Section title="Company" delay={0.05}>
+                  <p className="text-sm text-gray-700">
+                    Industry: {job.company.industry}
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    Company size: {job.company.companySize}
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    Type: {job.company.companyType}
+                  </p>
+
+                  <a
+                    href={job.company.website}
+                    target="_blank"
+                    className="text-sm text-blue-600 underline"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {job.company.website}
+                  </a>
+
+                  <p className="text-sm text-gray-700">
+                    Headquarters: {job.company.headquarters}
+                  </p>
+                </Section>
+
+                <ListSection
+                  title="Benefits"
+                  items={job.benefits}
+                  delay={0.1}
+                />
+                <ListSection
+                  title="Requirements"
+                  items={job.requirements}
+                  delay={0.15}
+                />
+              </div>
+
+              <div className="space-y-6">
+                <div className="flex justify-start items-center gap-2">
+                  {" "}
+                  {job.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="bg-blue-100 text-blue-600 font-thin px-2 py-1 rounded text-sm"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+                <ListSection
+                  title="Languages"
+                  items={job.languages}
+                  delay={0.25}
+                />
+
+                {job.contact && (
+                  <Section title="Contact" delay={0.3}>
+                    <p className="text-sm text-blue-600 underline">
+                      {job.contact.recruiterName}
+                    </p>
+                    <p className="text-sm text-gray-700">
+                      {job.contact.recruiterEmail}
+                    </p>
+                  </Section>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

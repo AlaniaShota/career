@@ -1,28 +1,22 @@
-import { type Variants, type Transition } from "framer-motion";
+import type { Transition, Variants } from "framer-motion";
 
-export const hoverTransition: Transition = {
-  type: "spring",
-  stiffness: 400,
-  damping: 30,
+export const unifiedTransition: Transition = {
+  duration: 0.35,
+  ease: "easeInOut",
 };
+export const hoverTransition = unifiedTransition;
 
 export const listContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.08,
-    },
+    transition: { staggerChildren: 0.08 },
   },
 };
 
 export const cardItem: Variants = {
   hidden: { opacity: 0, y: 12 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: hoverTransition,
-  },
+  visible: { opacity: 1, y: 0, transition: unifiedTransition },
 };
 
 export const cardWrapperHover = {
@@ -33,23 +27,12 @@ export const cardWrapperHover = {
 
 export const cardInnerItem: Variants = {
   hidden: { opacity: 0, y: 6 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 350,
-      damping: 25,
-    },
-  },
+  visible: { opacity: 1, y: 0, transition: unifiedTransition },
 };
+
 export function getJobCardClass(isSelected: boolean, isOtherSelected: boolean) {
   return {
-    className: `cursor-pointer w-full rounded-2xl transition-all ${
-      isSelected
-        ? "bg-blue-50 shadow-2xl border border-blue-300"
-        : "bg-white shadow-sm border border-gray-200"
-    }`,
+    className: `cursor-pointer w-full rounded-2xl transition-all`,
     style: { opacity: isOtherSelected ? 0.2 : 1 },
   };
 }

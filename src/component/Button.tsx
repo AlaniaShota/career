@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 
 interface ButtonProps {
   children?: React.ReactNode;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   to?: string;
   className?: string;
   disabled?: boolean;
+  variant?: "primary" | "secondary" | "link";
 }
 
 export default function Button({
@@ -15,13 +16,23 @@ export default function Button({
   to,
   className = "",
   disabled = false,
+  variant = "primary",
 }: ButtonProps) {
   const baseStyles =
-    "px-4 py-2 bg-gstore-blue text-white rounded hover:bg-gstore-midnight transition-colors disabled:opacity-50";
+    "px-4 py-2 rounded cursor-pointer transition-colors disabled:opacity-50";
+
+  const variantStyles = {
+    primary: "bg-gstore-blue text-white hover:bg-gstore-midnight",
+    secondary: "bg-gray-100 text-gray-700 hover:bg-gray-200",
+    link: "bg-transparent text-blue-600 hover:underline p-0",
+  };
 
   if (to) {
     return (
-      <Link to={to} className={`${baseStyles} ${className}`}>
+      <Link
+        to={to}
+        className={`${baseStyles} ${variantStyles[variant]} ${className}`}
+      >
         {children}
       </Link>
     );
@@ -30,7 +41,7 @@ export default function Button({
   return (
     <button
       onClick={onClick}
-      className={`${baseStyles} ${className}`}
+      className={`${baseStyles} ${variantStyles[variant]} ${className}`}
       disabled={disabled}
     >
       {children}

@@ -1,7 +1,7 @@
-
 import ApplyByEmailOrForm from "../../ApplyByEmailOrForm";
 import type { Job } from "../../../../store/jobStore";
 import Button from "../../../../component/Button";
+import { Link } from "react-router-dom";
 
 export default function JobActions({ job }: { job: Job }) {
   if (!job.status)
@@ -19,9 +19,11 @@ export default function JobActions({ job }: { job: Job }) {
           jobTitle={job.title}
         />
       )}
-      <Button
+      <Link
         to={`/apply?jobId=${job.id}&title=${encodeURIComponent(job.title)}`}
-      />
+      >
+        <Button>Apply</Button>
+      </Link>
     </div>
   );
 }

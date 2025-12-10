@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import SearchInput from "../../filters/SearchInput";
 import IndustryFilter from "../../filters/IndustryFilter";
@@ -17,59 +17,43 @@ export interface FilterForm {
   experience: string | null;
   sort: "default" | "date" | "salary" | "remote";
 }
+
 interface Props {
   jobs: Job[];
+  className?: string; // чтобы передавать sticky или другие стили
 }
 
-export default function JobsFilter({ jobs }: Props) {
-  const [open, setOpen] = useState(false);
+export default function JobsFilter({ jobs, className = "" }: Props) {
   const { control, setValue, reset, watch } = useFormContext<FilterForm>();
+  const filters = watch();
 
-  const industries = Array.from(new Set(jobs.map((j) => j.company.industry)));
-  const skills = Array.from(new Set(jobs.flatMap((j) => j.skills)));
+  // Уникальные значения для фильтров
+  const industries = useMemo(() => Array.from(new Set(jobs.map((j) => j.company.industry))), [jobs]);
+  const skills = useMemo(() => Array.from(new Set(jobs.flatMap((j) => j.skills))), [jobs]);
 
   return (
-    <form className=" bg-white mt-4 rounded-2xl shadow-2xl">
-      <div className="flex justify-end items-center gap-2 w-full ">
-        <div className="w-full">
-          <SearchInput control={control} name="search" />
-        </div>
-        <button
-          type="button"
-          onClick={() => setOpen((o) => !o)}
-          className="px-3 py-2 mx-2 rounded bg-gray-200"
-        >
-          {open ? " ▲" : "▼"}
-        </button>
-      </div>
+    <div
+      className={`bg-white rounded-2xl shadow-2xl w-2/6 p-4 flex flex-col gap-4 sticky top-4 ${className}`}
+    >
+      {/* Поиск */}
+      <SearchInput control={control} name="search" />
 
-      {open && (
-        <div className="mt-4 mx-2 space-y-4">
-          <IndustryFilter
-            industries={industries}
-            control={control}
-            name="industry"
-          />
-          <SkillFilter
-            skills={skills}
-            control={control}
-            name="skill"
-            setValue={setValue}
-          />
-          <RemoteToggle control={control} name="remote" />
-          <ExperienceFilter control={control} name="experience" />
-          <SortFilter control={control} name="sort" />
-          <ActiveChips watch={watch} setValue={setValue} />
+      {/* Фильтры */}
+      <IndustryFilter industries={industries} control={control} name="industry" />
+      <SkillFilter skills={skills} control={control} name="skill" setValue={setValue} />
+      <RemoteToggle control={control} name="remote" />
+      <ExperienceFilter control={control} name="experience" />
+      <SortFilter control={control} name="sort" />
+      <ActiveChips watch={filters} setValue={setValue} />
 
-          <button
-            type="button"
-            onClick={() => reset()}
-            className="px-3 py-2 my-2 rounded bg-gray-200 w-full"
-          >
-            Reset all
-          </button>
-        </div>
-      )}
-    </form>
+      {/* Сброс */}
+      <button
+        type="button"
+        onClick={() => reset()}
+        className="px-3 py-2 rounded bg-gray-200 w-full"
+      >
+        Reset all
+      </button>
+    </div>
   );
 }

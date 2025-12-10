@@ -5,10 +5,11 @@ import type { FilterForm } from "../details/components/JobsFilter";
 
 interface Props {
   control: Control<FilterForm>;
-  name: "search";
+  name: keyof FilterForm;
+  placeholder?: string;
 }
 
-export default function SearchInput({ control, name }: Props) {
+export default function SearchInput({ control, name, placeholder }: Props) {
   return (
     <Controller
       name={name}
@@ -16,9 +17,9 @@ export default function SearchInput({ control, name }: Props) {
       render={({ field }) => (
         <input
           {...field}
-          value={field.value ?? ""} 
-          placeholder="Search jobs..."
-          className="w-full m-3 p-1 rounded"
+          placeholder={placeholder || "Search..."}
+          className="w-full p-2 rounded border"
+          value={String(field.value ?? "")}
         />
       )}
     />

@@ -2,34 +2,33 @@ import { type UseFormSetValue } from "react-hook-form";
 import type { FilterForm } from "../details/components/JobsFilter";
 
 interface Props {
-  watch: () => FilterForm;
+  watch: FilterForm;
   setValue: UseFormSetValue<FilterForm>;
 }
 
 export default function ActiveChips({ watch, setValue }: Props) {
-  const values = watch();
-
+  // const values = watch();
   return (
     <div className="flex flex-wrap gap-2">
-      {values.industry && (
+      {watch.industry && (
         <span className="px-3 py-1 font-thin rounded-full bg-gray-100">
-          {values.industry}{" "}
+          {watch.industry}{" "}
           <button onClick={() => setValue("industry", null)}>×</button>
         </span>
       )}
-      {values.skill && (
+      {watch.skill && (
         <span className="px-3 py-1 font-thin rounded-full bg-gray-100">
-          {values.skill}{" "}
+          {watch.skill}{" "}
           <button onClick={() => setValue("skill", null)}>×</button>
         </span>
       )}
-      {values.experience && (
+      {watch.experience && (
         <span className="px-3 py-1 font-thin rounded-full bg-gray-100">
-          {values.experience}{" "}
+          {watch.experience}{" "}
           <button onClick={() => setValue("experience", null)}>×</button>
         </span>
       )}
-      {values.remote && (
+      {watch.remote && (
         <span className="px-3 py-1 font-thin rounded-full bg-gray-100">
           Remote <button onClick={() => setValue("remote", false)}>×</button>
         </span>
