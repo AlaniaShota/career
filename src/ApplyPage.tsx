@@ -142,7 +142,7 @@ export default function ApplyPage() {
         <motion.button
           type="submit"
           disabled={!isValid}
-          className="px-5 py-3 bg-f83e55 rounded-lg font-medium hover:bg-faa71a transition-colors disabled:opacity-50"
+          className="px-5 py-3 bg-soft-sky rounded-lg font-medium hover:bg-sky-700 transition-colors disabled:opacity-50"
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.98 }}
           transition={hoverTransition}

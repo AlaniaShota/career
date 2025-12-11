@@ -10,7 +10,7 @@ export default function Header() {
     { id: 4, title: "Contact", to: "/contact" },
   ];
   return (
-    <nav className="flex flex-row justify-between py-2 items-center w-4/5 mx-auto">
+    <nav className="flex flex-row justify-between py-2 items-center w-4/5 mx-auto text-soft-silver">
       <Link className="text-2xl" to="/">
         SJob
       </Link>

@@ -20,14 +20,12 @@ export interface FilterForm {
 
 interface Props {
   jobs: Job[];
-  className?: string; // чтобы передавать sticky или другие стили
+  className?: string;
 }
 
 export default function JobsFilter({ jobs, className = "" }: Props) {
   const { control, setValue, reset, watch } = useFormContext<FilterForm>();
   const filters = watch();
-
-  // Уникальные значения для фильтров
   const industries = useMemo(() => Array.from(new Set(jobs.map((j) => j.company.industry))), [jobs]);
   const skills = useMemo(() => Array.from(new Set(jobs.flatMap((j) => j.skills))), [jobs]);
 
@@ -35,18 +33,13 @@ export default function JobsFilter({ jobs, className = "" }: Props) {
     <div
       className={`bg-white rounded-2xl shadow-2xl w-2/6 p-4 flex flex-col gap-4 sticky top-4 ${className}`}
     >
-      {/* Поиск */}
       <SearchInput control={control} name="search" />
-
-      {/* Фильтры */}
       <IndustryFilter industries={industries} control={control} name="industry" />
       <SkillFilter skills={skills} control={control} name="skill" setValue={setValue} />
       <RemoteToggle control={control} name="remote" />
       <ExperienceFilter control={control} name="experience" />
       <SortFilter control={control} name="sort" />
       <ActiveChips watch={filters} setValue={setValue} />
-
-      {/* Сброс */}
       <button
         type="button"
         onClick={() => reset()}

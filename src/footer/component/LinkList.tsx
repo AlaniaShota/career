@@ -41,7 +41,7 @@ const LinkList = () => {
                     <motion.h3
                         whileHover={{ scale: 1.1 }} 
                         transition={{ type: 'spring', duration: 0.1, delay:0.1, stiffness: 300 }} 
-                        className='border-b text-gstore-midnight lg:text-lg max-sm:text-sm'>
+                        className='border-b text-soft-silver lg:text-lg max-sm:text-sm'>
                             {item.title}
                         </motion.h3>
                 </Link>
@@ -51,7 +51,7 @@ const LinkList = () => {
         <div className='flex flex-row items-center gap-4 mt-0 max-sm:mt-4'>
             {linkIcon.map(item => (
                 <Link key={item.id} to={item.link} target='_blank' className='w-6 h-6'>
-                <img src={item.img}  alt='Link' className='object-cover bg-soft-silver' />
+                <img src={item.img}  alt='Link' className='object-cover ' />
                 </Link>
             ))}
         </div>
@@ -62,7 +62,7 @@ const LinkList = () => {
                 key={item.id}
                 whileHover={{ scale: 1.1 }} 
                 transition={{ type: 'spring', duration: 0.1, delay:0.1, stiffness: 300 }} 
-                className='border-b text-gstore-midnight hover:opacity-75 max-sm:text-sm cursor-wait'>
+                className='border-b text-soft-silver hover:opacity-75 max-sm:text-sm cursor-wait'>
                     {item.title}
                 </motion.h3>
             ))}
