@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FaEye } from "react-icons/fa";
 import defaultLogo from "../../../public/163.jpg";
-import type { FilterForm } from "./details/components/JobsFilter";
+import type { FilterForm } from "./JobsFilter";
 import type { Job } from "../../store/jobStore";
 
 import {

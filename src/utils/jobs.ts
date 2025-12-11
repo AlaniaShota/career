@@ -1,4 +1,4 @@
-import type { FilterForm } from "../job/component/details/components/JobsFilter";
+import type { FilterForm } from "../job/component/JobsFilter";
 import type { Job } from "../store/jobStore";
 
 export function filterAndSortJobs(
