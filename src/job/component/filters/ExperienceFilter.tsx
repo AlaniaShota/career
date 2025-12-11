@@ -1,5 +1,8 @@
 import { Controller, type Control } from "react-hook-form";
 import type { FilterForm } from "../JobsFilter";
+import { Select } from "antd";
+
+const { Option } = Select;
 
 interface Props {
   control: Control<FilterForm>;
@@ -15,27 +18,25 @@ export default function ExperienceFilter({ control, name }: Props) {
       <Controller
         control={control}
         name={name}
-        render={({ field }) => {
-          const value = field.value != null ? String(field.value) : "";
-
-          return (
-            <select
-              {...field}
-              value={value}
-              onChange={(e) =>
-                field.onChange(e.target.value || null) 
-              }
-              className="border px-3 py-2 rounded w-full"
-            >
-              <option value="">All</option>
-              {levels.map((l) => (
-                <option key={l} value={l}>
-                  {l}
-                </option>
-              ))}
-            </select>
-          );
-        }}
+        render={({ field }) => (
+          <Select
+            {...field}
+            value={field.value || undefined} 
+            onChange={(value) => field.onChange(value || null)}
+            placeholder="Select experience"
+            size="large"
+            className="w-full rounded-lg"
+            dropdownClassName="rounded-lg"
+            allowClear
+          >
+            <Option value="">All</Option>
+            {levels.map((level) => (
+              <Option key={level} value={level}>
+                {level}
+              </Option>
+            ))}
+          </Select>
+        )}
       />
     </div>
   );

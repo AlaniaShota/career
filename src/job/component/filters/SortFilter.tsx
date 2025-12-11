@@ -1,5 +1,8 @@
 import { Controller, type Control } from "react-hook-form";
 import type { FilterForm } from "../JobsFilter";
+import { Select } from "antd";
+
+const { Option } = Select;
 
 interface Props {
   control: Control<FilterForm>;
@@ -21,20 +24,21 @@ export default function SortFilter({ control, name }: Props) {
         control={control}
         name={name}
         render={({ field }) => (
-          <select
+          <Select
             {...field}
-            value={(field.value ?? "default") as string}
-            onChange={(e) =>
-              field.onChange(e.target.value as FilterForm["sort"])
-            }
-            className="border px-3 py-2 rounded w-full"
+            value={field.value || "default"} 
+            onChange={(value) => field.onChange(value)}
+            placeholder="Select sort"
+            size="large"
+            className="w-full rounded-lg"
+            dropdownClassName="rounded-lg"
           >
             {options.map((o) => (
-              <option key={o.value} value={o.value}>
+              <Option key={o.value} value={o.value}>
                 {o.label}
-              </option>
+              </Option>
             ))}
-          </select>
+          </Select>
         )}
       />
     </div>

@@ -15,18 +15,18 @@ export const listContainer: Variants = {
 };
 
 export const cardItem: Variants = {
-  hidden: { opacity: 0, y: 12 },
+  hidden: { opacity: 0, y: 0 },
   visible: { opacity: 1, y: 0, transition: unifiedTransition },
 };
 
 export const cardWrapperHover = {
   scale: 1.01,
-  y: 1,
+  y: 0,
   boxShadow: "0 15px 25px rgba(0,0,0,0.18)",
 };
 
 export const cardInnerItem: Variants = {
-  hidden: { opacity: 0, y: 6 },
+  hidden: { opacity: 0, y: 2 },
   visible: { opacity: 1, y: 0, transition: unifiedTransition },
 };
 
