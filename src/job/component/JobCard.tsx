@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FaEye } from "react-icons/fa";
-import defaultLogo from "../../../public/163.jpg";
+import defaultLogo from "/public/163.jpg";
 import type { FilterForm } from "./JobsFilter";
 import type { Job } from "../../store/jobStore";
 
@@ -106,6 +106,15 @@ const ListSection = ({
     </Section>
   ) : null;
 
+function SectionBlock({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="border-b border-gray-200 pb-2">
+      {children}
+    </div>
+  );
+}
+
+
 function Card({ job }: { job: Job }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -204,71 +213,81 @@ function Card({ job }: { job: Job }) {
           >
             <div className="grid grid-cols-2 gap-8 pt-2">
               <div className="space-y-6">
-                <Section title="Company" delay={0.05}>
-                  <p className="text-sm text-gray-700">
-                    Industry: {job.company.industry}
-                  </p>
-                  <p className="text-sm text-gray-700">
-                    Company size: {job.company.companySize}
-                  </p>
-                  <p className="text-sm text-gray-700">
-                    Type: {job.company.companyType}
-                  </p>
+                <SectionBlock>
+                  <Section title="Company" delay={0.05}>
+                    <p className="text-sm text-gray-700">
+                      Industry: {job.company.industry}
+                    </p>
+                    <p className="text-sm text-gray-700">
+                      Company size: {job.company.companySize}
+                    </p>
+                    <p className="text-sm text-gray-700">
+                      Type: {job.company.companyType}
+                    </p>
 
-                  <a
-                    href={job.company.website}
-                    target="_blank"
-                    className="text-sm text-blue-600 underline"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {job.company.website}
-                  </a>
+                    <a
+                      href={job.company.website}
+                      target="_blank"
+                      className="text-sm text-blue-600 underline"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Web {job.company.website}
+                    </a>
 
-                  <p className="text-sm text-gray-700">
-                    Headquarters: {job.company.headquarters}
-                  </p>
-                </Section>
-
-                <ListSection
-                  title="Benefits"
-                  items={job.benefits}
-                  delay={0.1}
-                />
-                <ListSection
-                  title="Requirements"
-                  items={job.requirements}
-                  delay={0.15}
-                />
+                    <p className="text-sm text-gray-700">
+                      Headquarters: {job.company.headquarters}
+                    </p>
+                  </Section>
+                </SectionBlock>
+                <SectionBlock>
+                  <ListSection
+                    title="Benefits"
+                    items={job.benefits}
+                    delay={0.1}
+                  />
+                </SectionBlock>
+                <SectionBlock>
+                  <ListSection
+                    title="Requirements"
+                    items={job.requirements}
+                    delay={0.15}
+                  />
+                </SectionBlock>
               </div>
 
               <div className="space-y-6">
-                <div className="flex justify-start items-center gap-2">
-                  {" "}
-                  {job.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="bg-blue-100 text-blue-600 font-thin px-2 py-1 rounded text-sm"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-                <ListSection
-                  title="Languages"
-                  items={job.languages}
-                  delay={0.25}
-                />
-
-                {job.contact && (
-                  <Section title="Contact" delay={0.3}>
-                    <p className="text-sm text-blue-600 underline">
-                      {job.contact.recruiterName}
-                    </p>
-                    <p className="text-sm text-gray-700">
-                      {job.contact.recruiterEmail}
-                    </p>
+                <SectionBlock>
+                  <Section title="Skill" delay={0.2}>
+                    {job.skills.map((skill) => (
+                      <div className=" flex flex-wrap flex-row gap-2 justify-start items-center mb-1 ">
+                        <div className="bg-blue-100 text-blue-600 rounded-lg px-2 py-1">
+                          <p key={skill} className="font-thin  text-sm">
+                            {skill}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
                   </Section>
-                )}
+                </SectionBlock>
+                <SectionBlock>
+                  <ListSection
+                    title="Languages"
+                    items={job.languages}
+                    delay={0.25}
+                  />
+                </SectionBlock>
+                <SectionBlock>
+                  {job.contact && (
+                    <Section title="Contact" delay={0.3}>
+                      <p className="text-sm text-blue-600 underline">
+                        {job.contact.recruiterName}
+                      </p>
+                      <p className="text-sm text-gray-700">
+                        {job.contact.recruiterEmail}
+                      </p>
+                    </Section>
+                  )}
+                </SectionBlock>
               </div>
             </div>
           </motion.div>

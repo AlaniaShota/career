@@ -8,6 +8,7 @@ interface ButtonProps {
   className?: string;
   disabled?: boolean;
   variant?: "primary" | "secondary" | "link";
+  type?: "button" | "submit" | "reset";
 }
 
 export default function Button({
@@ -17,6 +18,7 @@ export default function Button({
   className = "",
   disabled = false,
   variant = "primary",
+  type = "button",
 }: ButtonProps) {
   const baseStyles =
     "px-4 py-2 rounded cursor-pointer transition-colors disabled:opacity-50";
@@ -40,6 +42,7 @@ export default function Button({
 
   return (
     <button
+      type={type}
       onClick={onClick}
       className={`${baseStyles} ${variantStyles[variant]} ${className}`}
       disabled={disabled}

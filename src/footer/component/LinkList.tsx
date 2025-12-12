@@ -1,10 +1,10 @@
 "use client"
 import {motion} from 'framer-motion'
-import facebook from '/public/footerImg/Social media icons.svg'
-import instagram from '/public/footerImg/Social media icons (1).svg'
-import twitter from '/public/footerImg/Group.svg'
-import youtube from '/public/footerImg/Social media icons (2).svg' 
-import linkedIn from '/public/footerImg/Social media icons (3).svg'
+import facebook from '/footerImg/Social media icons.svg'
+import instagram from '/footerImg/Social media icons (1).svg'
+import twitter from '/footerImg/Group.svg'
+import youtube from '/footerImg/Social media icons (2).svg' 
+import linkedIn from '/footerImg/Social media icons (3).svg'
 import { Link } from 'react-router-dom'
 
 
