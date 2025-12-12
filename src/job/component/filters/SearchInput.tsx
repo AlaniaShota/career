@@ -1,40 +1,35 @@
 "use client";
-import { useState } from "react";
-import { Input } from "antd";
 
-import { Controller, type Control } from "react-hook-form";
+import { Input } from "antd";
+import { Controller, type Control, type FieldValues, type Path } from "react-hook-form";
 import { FaSearch } from "react-icons/fa";
 
-interface Props {
-  control: Control<any>;
-  name: string;
+interface Props<T extends FieldValues> {
+  control: Control<T>;
+  name: Path<T>;
   placeholder?: string;
 }
 
-export default function SearchInput({ control, name}: Props) {
-  const [focused, setFocused] = useState(false);
-
+export default function SearchInput<T extends FieldValues>({
+  control,
+  name,
+  placeholder = "Search",
+}: Props<T>) {
   return (
     <Controller
       name={name}
       control={control}
-      render={({ field }) => {
-     
-
-        return (
-          <div className="relative w-full max-w-md mx-auto">
-            <Input
-              {...field}
-              onFocus={() => setFocused(true)}
-              onBlur={() => setFocused(false)}
-              prefix={<FaSearch className="text-gstore-midnight" />}
-              size="large"
-              placeholder="Search"
-              className="py-2 rounded-lg"
-            />
-          </div>
-        );
-      }}
+      render={({ field }) => (
+        <div className="relative w-full max-w-md mx-auto">
+          <Input
+            {...field}
+            prefix={<FaSearch className="text-gstore-midnight" />}
+            size="large"
+            placeholder={placeholder}
+            className="py-2 rounded-lg"
+          />
+        </div>
+      )}
     />
   );
 }

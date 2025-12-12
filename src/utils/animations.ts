@@ -32,7 +32,10 @@ export const cardInnerItem: Variants = {
 
 export function getJobCardClass(isSelected: boolean, isOtherSelected: boolean) {
   return {
-    className: `cursor-pointer w-full rounded-2xl transition-all`,
+    className: `
+      cursor-pointer w-full rounded-2xl transition-all
+      ${isSelected ? "border-2 border-blue-500 shadow-md" : ""}
+    `,
     style: { opacity: isOtherSelected ? 0.2 : 1 },
   };
 }
