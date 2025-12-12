@@ -9,4 +9,3 @@ export const help =
 
 export const lorem =
   "        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, error. Commodi, enim voluptate corrupti hic blanditiis aspernatur accusamus numquam tempore iusto beatae in unde, accusantium nesciunt rerum voluptatibus adipisci? Dolorem.";
-const test = "test";

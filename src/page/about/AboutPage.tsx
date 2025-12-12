@@ -8,6 +8,7 @@ import {
   secondaryDescription,
   title,
 } from "./component/constanta";
+import Employees from "./component/Employees";
 
 export default function AboutPage() {
   const bannerWidth = "w-2/4";
@@ -40,11 +41,10 @@ export default function AboutPage() {
             alt="About"
             className="w-3/5 rounded-2xl object-cover"
           />
-          <p className="text-soft-silver pt-10 w-2/3">
-    {lorem}
-          </p>
+          <p className="text-soft-silver pt-10 w-2/3">{lorem}</p>
         </div>
       </div>
+      <Employees/>
     </>
   );
 }
