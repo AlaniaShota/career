@@ -7,8 +7,8 @@ import ExperienceFilter from "./filters/ExperienceFilter";
 import SortFilter from "./filters/SortFilter";
 import RemoteToggle from "./filters/RemoteToggle";
 import ActiveChips from "./filters/ActiveChips";
-import type { Job } from "../../store/jobStore";
-import Button from "../../component/Button";
+import type { Job } from "../../../store/jobStore";
+import Button from "../../../component/Button";
 
 export interface FilterForm {
   search: string;

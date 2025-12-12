@@ -2,7 +2,7 @@
 import { useForm, FormProvider } from "react-hook-form";
 import JobsFilter, { type FilterForm } from "./JobsFilter";
 import { useNavigate, useParams } from "react-router-dom";
-import type { Job } from "../../store/jobStore";
+import type { Job } from "../../../store/jobStore";
 import JobCards from "./JobCard";
 
 interface Props {

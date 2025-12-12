@@ -7,7 +7,7 @@ import JobActions from "./components/JobActions";
 import RequirementsList from "./components/RequirementsList";
 import BenefitsList from "./components/BenefitsList";
 import LanguagesList from "./components/LanguagesList";
-import type { Job } from "../../../store/jobStore";
+import type { Job } from "../../../../store/jobStore";
 import JobHeader from "./components/JobHeader";
 import JobMeta from "./components/JobMeta";
 

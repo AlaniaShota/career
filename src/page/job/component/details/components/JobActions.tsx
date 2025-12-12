@@ -1,6 +1,6 @@
 import ApplyByEmailOrForm from "../../ApplyByEmailOrForm";
-import type { Job } from "../../../../store/jobStore";
-import Button from "../../../../component/Button";
+import type { Job } from "../../../../../store/jobStore";
+import Button from "../../../../../component/Button";
 import { Link } from "react-router-dom";
 
 export default function JobActions({ job }: { job: Job }) {

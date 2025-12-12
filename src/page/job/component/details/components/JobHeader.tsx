@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { Job } from "../../../../store/jobStore";
+import type { Job } from "../../../../../store/jobStore";
 
 interface JobHeaderProps {
   job: Job;

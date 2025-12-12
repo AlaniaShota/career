@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { FaEye } from "react-icons/fa";
 import defaultLogo from "/public/163.jpg";
 import type { FilterForm } from "./JobsFilter";
-import type { Job } from "../../store/jobStore";
+import type { Job } from "../../../store/jobStore";
 
 import {
   listContainer,
@@ -14,9 +14,9 @@ import {
   getJobCardClass,
   cardInnerItem,
   unifiedTransition,
-} from "../../utils/animations";
-import { filterAndSortJobs } from "../../utils/jobs";
-import Button from "../../component/Button";
+} from "../../../utils/animations";
+import { filterAndSortJobs } from "../../../utils/jobs";
+import Button from "../../../component/Button";
 import { Link } from "react-router-dom";
 
 interface Props {

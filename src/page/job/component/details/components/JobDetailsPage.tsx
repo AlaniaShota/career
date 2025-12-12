@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useJobStore } from "../../../../store/jobStore";
+import { useJobStore } from "../../../../../store/jobStore";
 import JobDetails from "../JobDetails";
 
 export default function JobDetailsPage() {

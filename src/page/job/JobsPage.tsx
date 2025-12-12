@@ -1,16 +1,15 @@
 "use client";
 import { useEffect, useState, useMemo } from "react";
-
-import { useJobStore } from "../store/jobStore";
+import { useJobStore } from "../../store/jobStore";
 import JobList from "./component/JobList";
+import { description, title } from "./component/constanta";
+import Banner from "../../component/Banner";
 
 export default function JobsPage() {
   const jobs = useJobStore((state) => state.jobs);
   const fetchJobs = useJobStore((state) => state.fetchJobs);
   const loading = useJobStore((state) => state.loading);
-
   const [next, setNext] = useState(10);
-  console.log(jobs);
 
   useEffect(() => {
     fetchJobs();
@@ -33,16 +32,18 @@ export default function JobsPage() {
 
   if (loading) return <p className="text-center my-4">Loading jobs...</p>;
 
+  const textSize = "text-7xl";
+  const textSizeDescription = "text-2xl";
+  
   return (
-    <div>
-      <div className="my-14 flex justify-start items-start gap-6 flex-col text-soft-silver">
-        <h1 className="text-7xl">Find Your Dream Job</h1>
-        <p className="text-3xl">
-          Browse job listings from top companies and find the perfect fit for
-          you.
-        </p>
-      </div>
+    <>
+      <Banner
+        title={title}
+        description={description}
+        textSize={textSize}
+        textSizeDescription={textSizeDescription}
+      />
       <JobList jobs={visibleJobs} />
-    </div>
+    </>
   );
 }
