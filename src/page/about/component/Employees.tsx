@@ -1,7 +1,12 @@
-
-import secondEmployee from "/public/fast-ink-y43tNhAVDNs-unsplash.png";
-import thirdEmployee from "/public/irvan-maulana-_vBQVlMR4rg-unsplash.png";
-import fourthEmployee from "/public/karacis-studio-TFQIyR8-lDI-unsplash.png";
+import {
+  cardItem,
+  cardWrapperHover,
+  hoverTransition,
+} from "../../../utils/animations";
+import secondEmployee from "../../../assets/fast-ink-y43tNhAVDNs-unsplash.png";
+import thirdEmployee from "../../../assets/irvan-maulana-_vBQVlMR4rg-unsplash.png";
+import fourthEmployee from "../../../assets/karacis-studio-TFQIyR8-lDI-unsplash.png";
+import { motion } from "framer-motion";
 
 export default function Employees() {
   const employersData = [
@@ -28,8 +33,11 @@ export default function Employees() {
   return (
     <div className="flex flex-row w-full justify-around my-18 text-soft-silver">
       {employersData.map((item) => (
-        <div
+        <motion.div
           key={item.id}
+          variants={cardItem}
+          whileHover={cardWrapperHover}
+          transition={hoverTransition}
           className="rounded-2xl flex flex-wrap flex-row justify-center items-start w-2xs"
         >
           <img
@@ -41,7 +49,7 @@ export default function Employees() {
             <h1 className="text-2xl">{item.name}</h1>
             <p className="text-ms">{item.post}</p>
           </div>
-        </div>
+        </motion.div>
       ))}
     </div>
   );

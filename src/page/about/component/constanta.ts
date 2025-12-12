@@ -8,4 +8,4 @@ export const help =
   "We aim to help everyone find the right job and build a successful career by providing access to thousands of job listings and useful resources. Our goal is to empower professionals with the tools they need to grow, connect, and thrive.";
 
 export const lorem =
-  "        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, error. Commodi, enim voluptate corrupti hic blanditiis aspernatur accusamus numquam tempore iusto beatae in unde, accusantium nesciunt rerum voluptatibus adipisci? Dolorem.";
+  "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, error. ";

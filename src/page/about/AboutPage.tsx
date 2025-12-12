@@ -1,5 +1,5 @@
 import Banner, { AnimatedLetters } from "../../component/Banner";
-import aboutPageImg from "/public/Copilot_20251212_202913.png";
+import aboutPageImg from "../../assets/Copilot_20251212_202913.png";
 import {
   description,
   help,
@@ -9,6 +9,13 @@ import {
   title,
 } from "./component/constanta";
 import Employees from "./component/Employees";
+import {
+  cardItem,
+  cardWrapperHover,
+  hoverTransition,
+} from "../../utils/animations";
+import { motion } from "framer-motion";
+import Team from "./component/Team";
 
 export default function AboutPage() {
   const bannerWidth = "w-3/5";
@@ -35,18 +42,22 @@ export default function AboutPage() {
             textSizeDescription={textSizeDescription}
           />
         </div>
-        <div className="mt-14 flex flex-col justify-center items-center">
-          <img
+        <div className="mt-16 flex flex-col justify-center items-center">
+          <motion.img
+            variants={cardItem}
+            whileHover={cardWrapperHover}
+            transition={hoverTransition}
             src={aboutPageImg}
             alt="About"
-            className="w-3/5 rounded-2xl object-cover"
+            className="w-2/4 rounded-2xl object-cover"
           />
-          <p className="text-soft-silver pt-10 w-2/3 text-xl leading-8">
+          <p className="text-soft-silver pt-10 w-2/4">
             <AnimatedLetters text={lorem} />
           </p>
         </div>
       </div>
       <Employees />
+      <Team />
     </>
   );
 }

@@ -5,9 +5,8 @@ import { Link } from "react-router-dom";
 export default function Header() {
   const links = [
     { id: 1, title: "Home", to: "/" },
-    { id: 2, title: "Jobs", to: "/jobs" },
-    { id: 3, title: "About", to: "/about" },
-    { id: 4, title: "Contact", to: "/contact" },
+    { id: 2, title: "About", to: "/about" },
+    { id: 3, title: "Contact", to: "/contact" },
   ];
   return (
     <nav className="flex flex-row justify-between pt-6 items-center w-4/5 mx-auto text-soft-silver">
