@@ -39,3 +39,14 @@ export function getJobCardClass(isSelected: boolean, isOtherSelected: boolean) {
     style: { opacity: isOtherSelected ? 0.2 : 1 },
   };
 }
+
+export const typingLetterVariant: Variants = {
+  hidden: { opacity: 0 },
+  visible: (i: number) => ({
+    opacity: 1,
+    transition: {
+      delay: i * 0.03,
+      duration: 0.05,
+    },
+  }),
+};

@@ -1,4 +1,4 @@
-import Banner from "../../component/Banner";
+import Banner, { AnimatedLetters } from "../../component/Banner";
 import aboutPageImg from "/public/Copilot_20251212_202913.png";
 import {
   description,
@@ -11,7 +11,7 @@ import {
 import Employees from "./component/Employees";
 
 export default function AboutPage() {
-  const bannerWidth = "w-2/4";
+  const bannerWidth = "w-3/5";
   const textSize = "text-6xl";
   const textSizeDescription = "text-xl";
 
@@ -35,16 +35,18 @@ export default function AboutPage() {
             textSizeDescription={textSizeDescription}
           />
         </div>
-        <div className="mt-14">
+        <div className="mt-14 flex flex-col justify-center items-center">
           <img
             src={aboutPageImg}
             alt="About"
             className="w-3/5 rounded-2xl object-cover"
           />
-          <p className="text-soft-silver pt-10 w-2/3">{lorem}</p>
+          <p className="text-soft-silver pt-10 w-2/3 text-xl leading-8">
+            <AnimatedLetters text={lorem} />
+          </p>
         </div>
       </div>
-      <Employees/>
+      <Employees />
     </>
   );
 }
