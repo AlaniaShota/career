@@ -17,6 +17,7 @@ import {
 import { motion } from "framer-motion";
 import Team from "./component/Team";
 
+
 export default function AboutPage() {
   const bannerWidth = "w-3/5";
   const textSize = "text-6xl";

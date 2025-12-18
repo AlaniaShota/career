@@ -9,6 +9,7 @@ import ApplyPage from "./ApplyPage";
 import AdminPage from "./AdminPage";
 import JobDetailsPage from "./page/job/component/details/components/JobDetailsPage";
 import AboutPage from "./page/about/AboutPage";
+import ContactPage from "./page/contact/ContactPage";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { path: "about", element: <AboutPage /> },
       { path: "apply", element: <ApplyPage /> },
       { path: "admin", element: <AdminPage /> },
+      {path:'contact', element:<ContactPage/>},
       {
         path: "jobs/:id",
         element: <JobDetailsPage />,
