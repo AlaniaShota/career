@@ -7,16 +7,18 @@ export interface AnimatedListItem {
   id: number;
   name?: string;
   post: string | string[];
+
 }
 
 export interface AnimatedListProps {
   data: AnimatedListItem[];
   withBullet?: boolean;
+  listDisc?:string
 }
 
 export const AnimatedList = ({
   data,
-  withBullet = false,
+  withBullet = false, listDisc
 }: AnimatedListProps) => {
   return (
     <motion.ul
@@ -29,7 +31,7 @@ export const AnimatedList = ({
       {data.map((item, i) => (
         <motion.li
           key={item.id}
-          className={`flex flex-col gap-1 ${
+          className={`flex flex-row items-start gap-1 ${
             withBullet
               ? "before:content-['•'] before:text-soft-silver before:mr-1"
               : ""
@@ -46,7 +48,7 @@ export const AnimatedList = ({
           {item.name && <h3 className="font-semibold">{item.name}</h3>}
 
           {Array.isArray(item.post) ? (
-            <ul className="ml-4 list-disc">
+            <ul className={`${listDisc} ml-4`}>
               {item.post.map((text, idx) => (
                 <li key={idx}>{text}</li>
               ))}

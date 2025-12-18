@@ -10,6 +10,7 @@ import {
 import Support from "./component/Support";
 import MessageToSupport from "./component/MessageToSupport";
 import Office from "./component/Office";
+import FAQ from "./component/FAQ";
 
 export default function ContactPage() {
   const textSize = "text-6xl";
@@ -42,6 +43,7 @@ export default function ContactPage() {
         <MessageToSupport />
         <Office />
       </div>
+      <FAQ />
     </div>
   );
 }

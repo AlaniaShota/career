@@ -12,4 +12,5 @@ export const weekDays = "Mon–Fri, 9:00–18:00 (GMT)";
 export const location = "Our offices";
 export const germany = "Berlin, Germany";
 export const georgia = "Tbilisi, Georgia";
-export const remote = "";
+export const remote = "Remote-first team across Europe";
+export const faqTitle = "Frequently asked questions";
