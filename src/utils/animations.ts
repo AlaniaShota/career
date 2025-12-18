@@ -50,3 +50,34 @@ export const typingLetterVariant: Variants = {
     },
   }),
 };
+
+export const successVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.96,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.35,
+      ease: "easeOut",
+    },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.96,
+    transition: {
+      duration: 0.2,
+    },
+  },
+};
+
+export const listItem = {
+  hidden: { opacity: 0, y: 5 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: unifiedTransition,
+  },
+};

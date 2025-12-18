@@ -6,10 +6,10 @@ import { listContainer, unifiedTransition } from "../utils/animations";
 export interface AnimatedListItem {
   id: number;
   name?: string;
-  post: string;
+  post: string | string[];
 }
 
-interface AnimatedListProps {
+export interface AnimatedListProps {
   data: AnimatedListItem[];
   withBullet?: boolean;
 }
@@ -24,12 +24,12 @@ export const AnimatedList = ({
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
-      className="list-none"
+      className="list-none flex flex-col gap-2"
     >
       {data.map((item, i) => (
         <motion.li
           key={item.id}
-          className={`flex flex-row items-start gap-2 ${
+          className={`flex flex-col gap-1 ${
             withBullet
               ? "before:content-['•'] before:text-soft-silver before:mr-1"
               : ""
@@ -44,7 +44,16 @@ export const AnimatedList = ({
           }}
         >
           {item.name && <h3 className="font-semibold">{item.name}</h3>}
-          <p>{item.post}</p>
+
+          {Array.isArray(item.post) ? (
+            <ul className="ml-4 list-disc">
+              {item.post.map((text, idx) => (
+                <li key={idx}>{text}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>{item.post}</p>
+          )}
         </motion.li>
       ))}
     </motion.ul>

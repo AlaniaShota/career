@@ -1,10 +1,17 @@
 "use client";
+
 import { ListBlock } from "./ListBlock";
 import teamImg from "../../../assets/Copilot_20251213_003740.png";
 import { motion } from "framer-motion";
 import { unifiedTransition } from "../../../utils/animations";
+interface ListBlockItem {
+  id: number;
+  name?: string;
+  post: string;
+}
+
 export default function Team() {
-  const teamData = [
+  const teamData: ListBlockItem[] = [
     {
       id: 1,
       name: "Reliability —",
@@ -22,7 +29,7 @@ export default function Team() {
     },
   ];
 
-  const valuesData = [
+  const valuesData: ListBlockItem[] = [
     {
       id: 1,
       name: "Transparency —",
@@ -40,7 +47,7 @@ export default function Team() {
     },
   ];
 
-  const impactData = [
+  const impactData: ListBlockItem[] = [
     { id: 1, post: "Over 1 million job applications submitted" },
     { id: 2, post: "Trusted by 10,000+ companies worldwide" },
     { id: 3, post: "Serving users in 50+ countries" },
