@@ -18,6 +18,42 @@
   /* font-weight: 300; */
 }
 
+.gradient-card {
+  position: relative;
+  border-radius: 24px;
+  padding: 2px;
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+.gradient-card.gradient-gstore {
+  background: linear-gradient(135deg, #3a6ff8, rgba(203, 222, 248, 1), #f5c96b);
+}
+
+.gradient-card.gradient-magic-gold {
+  background: linear-gradient(135deg, #f5c96b, rgba(203, 222, 248, 1));
+}
+
+.gradient-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  filter: blur(14px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: -1;
+}
+
+.gradient-card:hover::after {
+  opacity: 0.55;
+}
+
+.gradient-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 0.1px #0c1220, 0 20px 40px #dde2e9;
+}
+
 .hide-scroll::-webkit-scrollbar {
   display: none;
 }

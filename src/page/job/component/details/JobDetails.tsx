@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import JobSkills from "./components/JobSkills";
 import JobDescription from "./components/JobDescription";
 import JobActions from "./components/JobActions";
@@ -10,22 +9,34 @@ import LanguagesList from "./components/LanguagesList";
 import type { Job } from "../../../../store/jobStore";
 import JobHeader from "./components/JobHeader";
 import JobMeta from "./components/JobMeta";
+import GradientCard from "../../../../component/GradientCard";
 
 interface JobDetailsProps {
   job: Job;
 }
 
-export default function JobDetails({ job }:JobDetailsProps) {
+export default function JobDetails({ job }: JobDetailsProps) {
+  const gradientStyle = "gradient-gstore";
   return (
-    <motion.div className="bg-white p-4 shadow-2xl rounded-2xl my-4 flex flex-col gap-2 w-full">
-      <JobHeader job={job} />
-      <JobMeta job={job} />
-      <JobSkills skills={job.skills} />
-      <RequirementsList requirements={job.requirements} />
-      <BenefitsList benefits={job.benefits} />
-      <LanguagesList languages={job.languages} />
-      <JobDescription text={job.fullDescription} />
-      <JobActions job={job} />
-    </motion.div>
+    <GradientCard
+      className="my-6"
+      gradientStyle={gradientStyle}
+      variant="premium"
+    >
+      <div>
+        {" "}
+        <JobHeader job={job} />
+        <JobMeta job={job} />
+
+        <div className="flex flex-row flex-wrap items-start gap-10 justify-between">
+          <RequirementsList requirements={job.requirements} />
+          <BenefitsList benefits={job.benefits} />
+          <LanguagesList languages={job.languages} />
+          <JobSkills skills={job.skills} />
+        </div>
+        <JobDescription text={job.fullDescription} />
+        <JobActions job={job} />
+      </div>
+    </GradientCard>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {  typingLetterVariant } from "../utils/animations";
+import { typingLetterVariant } from "../utils/animations";
 
 interface BannerProps {
   title: string;
@@ -18,33 +18,32 @@ interface AnimatedLettersProps {
 }
 
 export const AnimatedLetters = ({ text, width }: AnimatedLettersProps) => {
+  const cleanText = text.replace(/\n/g, " ");
 
-    const cleanText = text.replace(/\n/g, " ");
-  
-    return (
-      <p className={`${width} relative inline-block whitespace-normal`}>
-        {cleanText.split("").map((char, i) => (
-          <motion.span
-            key={i}
-            variants={typingLetterVariant}
-            initial="hidden"
-            animate="visible"
-            custom={i}
-            className="inline-block whitespace-pre"
-          >
-            {char === " " ? "\u00A0" : char}
-          </motion.span>
-        ))}
-
+  return (
+    <p className={`${width} relative inline-block whitespace-normal`}>
+      {cleanText.split("").map((char, i) => (
         <motion.span
-          className="inline-block w-[1ch] bg-soft-silver ml-1"
-          animate={{ opacity: [1, 0, 1] }}
-          transition={{ repeat: Infinity, duration: 1 }}
-        />
-      </p>
-    );
-  };
-  
+          key={i}
+          variants={typingLetterVariant}
+          initial="hidden"
+          animate="visible"
+          custom={i}
+          className="inline-block whitespace-pre"
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+
+      <motion.span
+        className="inline-block w-full bg-soft-silver ml-1"
+        animate={{ opacity: [1, 0, 1] }}
+        transition={{ repeat: Infinity, duration: 1 }}
+      />
+    </p>
+  );
+};
+
 export default function Banner({
   title,
   description,

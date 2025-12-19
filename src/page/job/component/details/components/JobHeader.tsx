@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { Job } from "../../../../../store/jobStore";
-
+import defaultLogo from "../../../../../assets/163.jpg";
 interface JobHeaderProps {
   job: Job;
 }
@@ -15,11 +15,14 @@ export default function JobHeader({ job }: JobHeaderProps) {
           src={job.company.logo}
           alt={job.company.name}
           className="w-full h-full rounded-2xl object-cover"
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src = defaultLogo;
+          }}
         />
       </motion.div>
 
       <div className="flex flex-col items-start justify-end mx-4">
-        <h3 className="text-xl text-gstore-midnight font-medium">
+        <h3 className="text-2xl  text-gstore-midnight font-thin">
           {job.title}
         </h3>
         <p className="text-gray-400">

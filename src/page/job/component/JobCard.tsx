@@ -122,7 +122,7 @@ function Card({ job }: { job: Job }) {
     <motion.div
       layout="position"
       transition={{ layout: unifiedTransition }}
-      className="p-6 bg-white rounded-2xl shadow-sm border  flex flex-col gap-4 cursor-pointer"
+      className="p-6 bg-white rounded-2xl shadow-sm   flex flex-col gap-4 cursor-pointer"
     >
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">

@@ -7,7 +7,7 @@ interface JobMetaProps {
 
 export default function JobMeta({ job }: JobMetaProps) {
   return (
-    <div className="flex flex-col mx-2 my-5 gap-2 font-medium">
+    <div className="flex flex-row mx-2 my-5 gap-2 font-medium">
       <Row label="Work" value={job.workArrangement} />
       <Row label="Salary" value={job.salary} />
       <Row label="Experience" value={job.experienceLevel} />
