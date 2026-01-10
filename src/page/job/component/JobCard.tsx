@@ -39,7 +39,7 @@ export default function JobCards({ jobs, selectedJobId, onSelect }: Props) {
 
   return (
     <motion.div
-      className="flex flex-col justify-center items-center w-3/5 gap-4"
+      className="flex flex-col justify-center items-center w-full md:w-3/5 gap-4"
       variants={listContainer}
       initial="hidden"
       animate="visible"
@@ -107,13 +107,8 @@ const ListSection = ({
   ) : null;
 
 function SectionBlock({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="border-b border-gray-200 pb-2">
-      {children}
-    </div>
-  );
+  return <div className="border-b border-gray-200 pb-2">{children}</div>;
 }
-
 
 function Card({ job }: { job: Job }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -122,10 +117,10 @@ function Card({ job }: { job: Job }) {
     <motion.div
       layout="position"
       transition={{ layout: unifiedTransition }}
-      className="p-6 bg-white rounded-2xl shadow-sm   flex flex-col gap-4 cursor-pointer"
+      className="p-6 bg-white rounded-2xl shadow-sm  flex flex-col gap-4 cursor-pointer"
     >
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-3">
           <img
             src={job.company.logo}
             alt={job.company.name}
@@ -135,7 +130,7 @@ function Card({ job }: { job: Job }) {
             }}
           />
 
-          <div>
+          <div className="flex flex-row md:flex-col items-center md:items-start gap-2 md:gap-2">
             <h2 className="text-lg text-gstore-blue">{job.company.name}</h2>
             <p className="text-gray-500 text-sm">
               {job.location} • {job.workArrangement}
@@ -143,7 +138,7 @@ function Card({ job }: { job: Job }) {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-3">
           <div className="flex items-center gap-1 text-gray-600">
             <FaEye />
             <p>{job.views}</p>
@@ -161,11 +156,21 @@ function Card({ job }: { job: Job }) {
         variants={cardInnerItem}
         initial="hidden"
         animate="visible"
-        className="font-medium cursor-pointer flex flex-row justify-between items-center w-full"
+        className="font-medium cursor-pointer flex flex-col md:flex-row justify-between items-start md:items-center w-full"
         whileHover={{ y: -1, color: "#1D4ED8" }}
       >
         <h3 className="text-xl font-light">{job.title}</h3>
-
+        <div className="flex flex-row items-center justify-between w-full my-6 md:hidden">
+          <p className="bg-blue-100 text-blue-600 font-thin px-2 py-1 rounded text-sm">
+            {job.experienceLevel}
+          </p>
+          <p className="bg-blue-100 text-blue-600 font-thin px-2 py-1 rounded text-sm">
+            {job.workArrangement}
+          </p>
+          <p className="bg-blue-100 text-blue-600 font-thin px-2 py-1 rounded text-sm">
+            {job.employmentType}
+          </p>
+        </div>
         <p className="text-xl font-light">
           {job.salaryRange
             ? `$${job.salaryRange.min.toLocaleString()} – $${job.salaryRange.max.toLocaleString()}`
@@ -173,9 +178,11 @@ function Card({ job }: { job: Job }) {
         </p>
       </motion.div>
       {job.description && (
-        <p className="text-gray-700 text-sm">{job.description}</p>
+        <p className="text-gray-700 hidden md:flex text-sm">
+          {job.description}
+        </p>
       )}
-      <div className="flex justify-end items-center">
+      <div className="hidden md:flex justify-end items-center ">
         <Button
           variant="secondary"
           onClick={(e) => {

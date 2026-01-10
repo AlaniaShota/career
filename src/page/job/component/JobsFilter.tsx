@@ -51,7 +51,7 @@ export default function JobsFilter({ jobs, className = "" }: Props) {
 
   return (
     <div
-      className={`bg-white rounded-2xl shadow-2xl w-2/6 p-4 flex flex-col gap-4 sticky top-4 ${className}`}
+      className={`bg-white rounded-2xl shadow-2xl w-full md:w-2/6 p-4 flex flex-col gap-4 relative md:sticky top-4 ${className}`}
     >
       <SearchInput control={control} name="search" />
       <IndustryFilter

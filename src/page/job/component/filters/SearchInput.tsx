@@ -20,7 +20,7 @@ export default function SearchInput<T extends FieldValues>({
       name={name}
       control={control}
       render={({ field }) => (
-        <div className="relative w-full max-w-md mx-auto">
+        <div className="relative w-full max-w-md mx-4 md:mx-auto">
           <Input
             {...field}
             prefix={<FaSearch className="text-gstore-midnight" />}

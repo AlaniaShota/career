@@ -28,7 +28,6 @@ export default function FAQ() {
         <h3 className="text-3xl md:text-3xl mb-3">{faqTitle}</h3>
         <AnimatedList data={officeList} />
       </motion.div>
-      {/* <img src={faqImg} alt={faqTitle} className="w-auto object-contain" /> */}
     </div>
   );
 }

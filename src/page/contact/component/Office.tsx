@@ -18,7 +18,7 @@ export default function Office() {
   }));
 
   return (
-    <div className="text-gstore-midnight w-1/3 bg-white rounded-2xl shadow-sm border flex flex-col justify-between gap-10">
+    <div className="text-gstore-midnight w-1/3 bg-white rounded-2xl shadow-sm  flex flex-col justify-between gap-10">
       <motion.div
         variants={cardItem}
         initial="hidden"

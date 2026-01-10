@@ -32,7 +32,7 @@ const linkIcon = [
 
 const LinkList = () => {
   return (
-    <div className='flex flex-col w-full my-10'>
+    <div className='flex flex-col w-full my-6 md:my-10'>
         <div className='flex lg:flex-row max-sm:flex-col lg:justify-between max-sm:justify-center items-center w-full my-4'>
         <div className='flex flex-row items-start gap-4'>
             {linkUrl.map(item => (

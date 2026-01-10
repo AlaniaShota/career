@@ -47,7 +47,7 @@ export default function AdminPage() {
   if (!applications.length) return <p>No applications yet.</p>;
 
   return (
-    <div className="w-4/5 mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
+    <div className="w-4/5 mx-4 md:mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
       <h1 className="text-2xl font-medium mb-6">Admin Panel</h1>
       <MaterialReactTable
         columns={columns}

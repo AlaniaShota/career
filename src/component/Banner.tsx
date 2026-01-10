@@ -53,7 +53,7 @@ export default function Banner({
   textSizeDescription,
 }: BannerProps) {
   return (
-    <div className={` my-14 flex flex-col gap-6 text-soft-silver`}>
+    <div className={`my-6 md:my-14 flex flex-col gap-6 text-soft-silver`}>
       <h1 className={textSize}>
         <AnimatedLetters text={title} width={width} />
       </h1>

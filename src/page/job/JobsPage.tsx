@@ -32,8 +32,8 @@ export default function JobsPage() {
 
   if (loading) return <p className="text-center my-4">Loading jobs...</p>;
 
-  const textSize = "text-7xl";
-  const textSizeDescription = "text-2xl";
+  const textSize = "text-2xl md:text-7xl";
+  const textSizeDescription = "text-lg md:text-2xl";
   
   return (
     <>

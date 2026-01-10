@@ -2,14 +2,10 @@ import LinkList from "./component/LinkList";
 
 const Footer = () => {
   return (
-    <div className="flex flex-col justify-around bg-gstore-midnight items-start lg:w-4/5 max-sm:w-11/12 mx-auto mt-20">
+    <div className="flex flex-col justify-around bg-gstore-midnight items-start w-4/5 mx-4 md:mx-auto mt-12 md:mt-20">
       <div className="w-full mb-4 border  border-b-soft-silver" />
-      <h1 className={`text-start max-sm:text-center text-soft-silver font-light w-full text-2xl`}>SJob</h1>
+      <h1 className={`md:text-start text-center text-soft-silver font-light w-full text-2xl`}>SJob</h1>
       <LinkList />
-      <h2
-        className={`text-whiteSecond text-center w-full my-10 cursor-default`}
-      >
-      </h2>
     </div>
   );
 };

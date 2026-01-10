@@ -97,7 +97,7 @@ export default function ApplyPage() {
 
   return (
     <motion.div
-      className="p-6 max-w-xl mx-auto bg-linear-to-r from-gstore-midnight to-gstore-blue rounded-3xl mt-10 text-white shadow-xl"
+      className="p-6 max-w-xl mx-4 md:mx-auto bg-linear-to-r from-gstore-midnight to-gstore-blue rounded-3xl mt-10 text-white shadow-xl"
       variants={listContainer}
       initial="hidden"
       animate="visible"
