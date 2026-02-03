@@ -23,6 +23,8 @@ export default function SearchInput<T extends FieldValues>({
         <div className="relative w-full max-w-md mx-4 md:mx-auto">
           <Input
             {...field}
+            value={field.value ?? ""}
+            onChange={(event) => field.onChange(event.target.value)}
             prefix={<FaSearch className="text-gstore-midnight" />}
             size="large"
             placeholder={placeholder}

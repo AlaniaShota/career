@@ -16,15 +16,34 @@ export function filterAndSortJobs(
     ...filters,
   };
 
+  const normalize = (value: string) =>
+    value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  const searchQuery = normalize(resolvedFilters.search);
+
   return jobs
     .filter((job) => {
-      if (
-        resolvedFilters.search &&
-        !job.title
-          .toLowerCase()
-          .includes(resolvedFilters.search.toLowerCase())
-      )
-        return false;
+      if (searchQuery) {
+        const haystack = [
+          job.title,
+          job.company.name,
+          job.company.id,
+          job.company.website,
+          job.company.industry,
+          job.location,
+          job.employmentType,
+          job.experienceLevel,
+          job.workArrangement,
+          job.description,
+          job.tags?.join(" "),
+          job.skills.join(" "),
+          job.requirements?.join(" "),
+          job.benefits?.join(" "),
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        if (!normalize(haystack).includes(searchQuery)) return false;
+      }
       if (
         resolvedFilters.industry &&
         job.company.industry !== resolvedFilters.industry
