@@ -5,7 +5,7 @@ export default function NotFoundPage() {
       <img
         src={notFound}
         alt="Not Found"
-        className="w-full object-contain mb-4 rjounded-2xl md:w-2/5"
+        className="w-full object-contain rounded-2xl md:w-2/5"
       />
     </div>
   );
