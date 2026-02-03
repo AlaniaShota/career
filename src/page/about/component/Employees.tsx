@@ -31,7 +31,7 @@ export default function Employees() {
   ];
 
   return (
-    <div className="flex flex-row w-full justify-around my-18 text-soft-silver">
+    <div className="flex flex-col md:flex-row w-full justify-around my-18 text-soft-silver gap-6 md:-gap-0">
       {employersData.map((item) => (
         <motion.div
           key={item.id}

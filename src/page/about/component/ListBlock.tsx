@@ -11,7 +11,7 @@ interface ListBlockProps {
 }
 
 export const ListBlock = ({ title, data }: ListBlockProps) => {
-  const listDisc = "list-disc";
+  const listDisc = "list-disc ";
   return (
     <motion.div
       variants={cardItem}

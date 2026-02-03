@@ -18,14 +18,14 @@ import { motion } from "framer-motion";
 import Team from "./component/Team";
 
 export default function AboutPage() {
-  const bannerWidth = "w-3/5";
-  const textSize = "text-6xl";
-  const textSizeDescription = "text-xl";
+  const bannerWidth = "md:w-3/5 w-4/5";
+  const textSize = "md:text-6xl text-3xl ";
+  const textSizeDescription = "md:text-xl text-lg ";
 
   return (
     <>
-      <div className="flex flex-row items-center justify-between">
-        <div className="flex flex-col justify-start items-start">
+      <div className="flex flex-col md:flex-row items-center justify-center md:justify-between">
+        <div className="flex flex-col justify-center md:justify-start items-center md:items-start">
           <Banner
             title={title}
             description={description}
@@ -42,16 +42,16 @@ export default function AboutPage() {
             textSizeDescription={textSizeDescription}
           />
         </div>
-        <div className="mt-16 flex flex-col justify-center items-center">
+        <div className="mt-6 md:mt-16 flex flex-col justify-center items-center">
           <motion.img
             variants={cardItem}
             whileHover={cardWrapperHover}
             transition={hoverTransition}
             src={aboutPageImg}
             alt="About"
-            className="w-2/4 rounded-2xl object-cover"
+            className=" w-auto rounded-2xl object-cover"
           />
-          <p className="text-soft-silver pt-10 w-2/4">
+          <p className="text-soft-silver pt-5 md:pt-10 w-auto mdw-2/4">
             <AnimatedLetters text={lorem} />
           </p>
         </div>

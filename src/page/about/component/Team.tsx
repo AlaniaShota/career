@@ -61,8 +61,8 @@ export default function Team() {
   ];
 
   return (
-    <div className="flex flex-row justify-between items-center">
-      <div className="flex flex-row md:flex-col items-start justify-between gap-10">
+    <div className="flex flex-col md:flex-row justify-between items-center gap-10 md:gap-0">
+      <div className="flex flex-col items-start justify-between gap-10">
         {blocks.map((block, i) => (
           <ListBlock key={i} title={block.title} data={block.data} />
         ))}
@@ -70,7 +70,7 @@ export default function Team() {
       <motion.img
         src={teamImg}
         alt="Team"
-        className="w-2/6 rounded-2xl object-cover"
+        className="md:w-2/6 w-auto rounded-2xl object-cover"
         initial={{ opacity: 0, x: 50 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}

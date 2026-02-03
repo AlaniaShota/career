@@ -31,7 +31,7 @@ export const AnimatedList = ({
       {data.map((item, i) => (
         <motion.li
           key={item.id}
-          className={`flex flex-row items-start gap-1 ${
+          className={`flex flex-row flex-wrap items-start gap-2 ${
             withBullet
               ? "before:content-['•'] before:text-soft-silver before:mr-1"
               : ""
@@ -45,16 +45,16 @@ export const AnimatedList = ({
             },
           }}
         >
-          {item.name && <h3 className="font-semibold">{item.name}</h3>}
+          {item.name && <h3 className="font-semibold mr-1">{item.name}</h3>}
 
           {Array.isArray(item.post) ? (
-            <ul className={`${listDisc} ml-4`}>
+            <ul className={`${listDisc} ml-4 space-y-1`}>
               {item.post.map((text, idx) => (
                 <li key={idx}>{text}</li>
               ))}
             </ul>
           ) : (
-            <p>{item.post}</p>
+            <p className="whitespace-normal break-words">{item.post}</p>
           )}
         </motion.li>
       ))}

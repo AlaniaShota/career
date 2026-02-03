@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import { motion } from "framer-motion";
 import { typingLetterVariant } from "../utils/animations";
 
@@ -19,20 +20,34 @@ interface AnimatedLettersProps {
 
 export const AnimatedLetters = ({ text, width }: AnimatedLettersProps) => {
   const cleanText = text.replace(/\n/g, " ");
+  const words = cleanText.split(" ");
+  let charIndex = 0;
 
   return (
-    <p className={`${width} relative inline-block whitespace-normal`}>
-      {cleanText.split("").map((char, i) => (
-        <motion.span
-          key={i}
-          variants={typingLetterVariant}
-          initial="hidden"
-          animate="visible"
-          custom={i}
-          className="inline-block whitespace-pre"
-        >
-          {char === " " ? "\u00A0" : char}
-        </motion.span>
+    <p className={`${width ?? ""} relative inline-block whitespace-normal`}>
+      {words.map((word, wordIndex) => (
+        <Fragment key={`word-${wordIndex}`}>
+          <span className="inline-block whitespace-nowrap">
+            {word.split("").map((char) => {
+              const index = charIndex++;
+              return (
+                <motion.span
+                  key={`${wordIndex}-${index}`}
+                  variants={typingLetterVariant}
+                  initial="hidden"
+                  animate="visible"
+                  custom={index}
+                  className="inline-block"
+                >
+                  {char}
+                </motion.span>
+              );
+            })}
+          </span>
+          {wordIndex < words.length - 1 && (
+            <span className="inline-block w-2" aria-hidden="true" />
+          )}
+        </Fragment>
       ))}
 
       <motion.span

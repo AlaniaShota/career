@@ -1,9 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useMemo, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import defaultLogo from "../../../assets/163.jpg";
-import type { FilterForm } from "./JobsFilter";
 import type { Job } from "../../../store/jobStore";
 
 import {
@@ -15,7 +13,6 @@ import {
   cardInnerItem,
   unifiedTransition,
 } from "../../../utils/animations";
-import { filterAndSortJobs } from "../../../utils/jobs";
 import Button from "../../../component/Button";
 import { Link } from "react-router-dom";
 
@@ -26,15 +23,7 @@ interface Props {
 }
 
 export default function JobCards({ jobs, selectedJobId, onSelect }: Props) {
-  const { watch } = useFormContext<FilterForm>();
-  const filters = watch();
-
-  const filteredJobs = useMemo(
-    () => filterAndSortJobs(jobs, filters),
-    [jobs, filters]
-  );
-
-  if (!filteredJobs.length)
+  if (!jobs.length)
     return <div className="p-6 text-center text-gray-500">Nothing found</div>;
 
   return (
@@ -44,7 +33,7 @@ export default function JobCards({ jobs, selectedJobId, onSelect }: Props) {
       initial="hidden"
       animate="visible"
     >
-      {filteredJobs.map((job) => {
+      {jobs.map((job) => {
         const isSelected = selectedJobId === job.id;
         const isOtherSelected = selectedJobId !== undefined && !isSelected;
 
@@ -112,6 +101,10 @@ function SectionBlock({ children }: { children: React.ReactNode }) {
 
 function Card({ job }: { job: Job }) {
   const [isOpen, setIsOpen] = useState(false);
+  const logoSrc =
+    job.company.logo && job.company.logo.trim().length > 0
+      ? job.company.logo
+      : defaultLogo;
 
   return (
     <motion.div
@@ -122,10 +115,12 @@ function Card({ job }: { job: Job }) {
       <div className="flex justify-between items-center">
         <div className="flex flex-col md:flex-row items-start md:items-center gap-3">
           <img
-            src={job.company.logo}
+            src={logoSrc}
             alt={job.company.name}
             className="w-12 h-12 rounded-full object-cover"
+            referrerPolicy="no-referrer"
             onError={(e) => {
+              console.warn("Logo failed to load:", logoSrc);
               (e.currentTarget as HTMLImageElement).src = defaultLogo;
             }}
           />
@@ -266,11 +261,12 @@ function Card({ job }: { job: Job }) {
                 <SectionBlock>
                   <Section title="Skill" delay={0.2}>
                     {job.skills.map((skill) => (
-                      <div className=" flex flex-wrap flex-row gap-2 justify-start items-center mb-1 ">
+                      <div
+                        key={skill}
+                        className="flex flex-wrap flex-row gap-2 justify-start items-center mb-1"
+                      >
                         <div className="bg-blue-100 text-blue-600 rounded-lg px-2 py-1">
-                          <p key={skill} className="font-thin  text-sm">
-                            {skill}
-                          </p>
+                          <p className="font-thin text-sm">{skill}</p>
                         </div>
                       </div>
                     ))}
@@ -282,17 +278,19 @@ function Card({ job }: { job: Job }) {
                     items={job.languages}
                     delay={0.25}
                   />
-                </SectionBlock>
-                <SectionBlock>
-                  {job.contact && (
-                    <Section title="Contact" delay={0.3}>
-                      <p className="text-sm text-blue-600 underline">
-                        {job.contact.recruiterName}
-                      </p>
-                      <p className="text-sm text-gray-700">
-                        {job.contact.recruiterEmail}
-                      </p>
-                    </Section>
+                  <a
+                    href={job.company.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-blue-600 underline"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Web {job.company.website}
+                  </a>
+                  {job.contact?.recruiterEmail && (
+                    <p className="text-sm text-gray-700">
+                      {job.contact.recruiterEmail}
+                    </p>
                   )}
                 </SectionBlock>
               </div>
