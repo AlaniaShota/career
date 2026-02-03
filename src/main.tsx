@@ -10,6 +10,7 @@ import AdminPage from "./AdminPage";
 import JobDetailsPage from "./page/job/component/details/components/JobDetailsPage";
 import AboutPage from "./page/about/AboutPage";
 import ContactPage from "./page/contact/ContactPage";
+import NotFoundPage from "./page/404";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
         path: "jobs/:id",
         element: <JobDetailsPage />,
       },
+      {path: "*", element: <NotFoundPage />},
     ],
   },
 ]);
