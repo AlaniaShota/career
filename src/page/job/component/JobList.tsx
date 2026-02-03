@@ -28,7 +28,10 @@ export default function JobList({ jobs }: Props) {
     },
   });
 
-  const filters = useWatch({ control: methods.control });
+  const filters = useWatch<FilterForm>({
+    control: methods.control,
+    defaultValue: methods.getValues(),
+  });
   const filteredJobs = useMemo(
     () => filterAndSortJobs(safeJobs, filters),
     [safeJobs, filters]

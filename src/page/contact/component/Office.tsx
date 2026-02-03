@@ -18,13 +18,13 @@ export default function Office() {
   }));
 
   return (
-    <div className="text-gstore-midnight w-1/3 bg-white rounded-2xl shadow-sm  flex flex-col justify-between gap-10">
+    <div className="text-gstore-midnight w-auto md:w-1/3 bg-white rounded-2xl shadow-sm  flex flex-col justify-between gap-10">
       <motion.div
         variants={cardItem}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="text-gstore-midnight p-6 flex flex-col items-start"
+        className="text-gstore-midnight p-4 md:p-6 flex flex-col items-start"
       >
         <h3 className="text-2xl md:text-3xl mb-3">{officeTitle}</h3>
         <AnimatedList data={officeList}/>

@@ -3,34 +3,56 @@ import type { Job } from "../store/jobStore";
 
 export function filterAndSortJobs(
   jobs: Job[] | undefined,
-  filters: FilterForm
+  filters: Partial<FilterForm>
 ): Job[] {
   if (!jobs) return [];
+  const resolvedFilters: FilterForm = {
+    search: "",
+    industry: null,
+    skill: null,
+    remote: false,
+    experience: null,
+    sort: "default",
+    ...filters,
+  };
 
   return jobs
     .filter((job) => {
       if (
-        filters.search &&
-        !job.title.toLowerCase().includes(filters.search.toLowerCase())
+        resolvedFilters.search &&
+        !job.title
+          .toLowerCase()
+          .includes(resolvedFilters.search.toLowerCase())
       )
         return false;
-      if (filters.industry && job.company.industry !== filters.industry)
+      if (
+        resolvedFilters.industry &&
+        job.company.industry !== resolvedFilters.industry
+      )
         return false;
-      if (filters.skill && !job.skills.includes(filters.skill)) return false;
-      if (filters.remote && !job.remote) return false;
-      if (filters.experience && job.experienceLevel !== filters.experience)
+      if (
+        resolvedFilters.skill &&
+        !job.skills.includes(resolvedFilters.skill)
+      )
+        return false;
+      if (resolvedFilters.remote && !job.remote) return false;
+      if (
+        resolvedFilters.experience &&
+        job.experienceLevel !== resolvedFilters.experience
+      )
         return false;
       return true;
     })
     .sort((a, b) => {
-      if (filters.sort === "date")
+      if (resolvedFilters.sort === "date")
         return +new Date(b.postedAt) - +new Date(a.postedAt);
-      if (filters.sort === "salary") {
+      if (resolvedFilters.sort === "salary") {
         const parseTop = (s: string) =>
           +(s.match(/(\d{2,6})(?=\D*$)/)?.[0] ?? 0);
         return parseTop(b.salary) - parseTop(a.salary);
       }
-      if (filters.sort === "remote") return Number(b.remote) - Number(a.remote);
+      if (resolvedFilters.sort === "remote")
+        return Number(b.remote) - Number(a.remote);
       return 0;
     });
 }

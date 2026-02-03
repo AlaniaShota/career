@@ -57,8 +57,8 @@ export default function MessageToSupport() {
   };
 
   return (
-    <div className="text-gstore-midnight p-6 w-2/3 bg-white rounded-2xl shadow-sm  flex flex-col gap-6">
-      <div >
+    <div className="text-gstore-midnight p-4 md:p-6 w-auto md:w-2/3 bg-white rounded-2xl shadow-sm  flex flex-col gap-6">
+      <div>
         <h1 className="text-3xl font-semibold">{messageBlockTitle}</h1>
         <p className="text-lg text-gray-700 mt-1">{messageSubTitle}</p>
       </div>
